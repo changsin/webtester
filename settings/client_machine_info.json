@@ -1,0 +1,13 @@
+{
+  "Module": "main",
+  "WebdriverInfo": [
+    {
+      "Platform" : "PC",
+      "Browser" : "CH",
+      "WebdriverName" :  "chrome",
+      "WebdriverVersion": "97",
+      "API": "mac64",
+      "FileName": "chromedriver"
+    }
+  ]
+}
