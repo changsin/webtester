@@ -7,16 +7,21 @@ import multiprocessing
 import settings
 
 from src.executor.selenium_executor import SeleniumExecutor
+from src.model.options import Options
 from src.util import util
 from src.util.logger import get_logger
 
 logger = get_logger(__name__)
 
 def crawl(start_url, options_file_path):
-    # options = Options.from_json(options_file_path)
-    options = None
+    options = Options.from_json(options_file_path)
 
     selenium_executor = SeleniumExecutor.create(settings.CHROME_DRIVER_PATH, options)
+
+    crawler = Crawler(selenium_executor.driver, options, path)
+
+    source_node = crawler.crawl(start_url, depth)
+    logger.info("source_node is %s", source_node)
 
     selenium_executor.driver.get("https://aiworks.co.kr")
 
