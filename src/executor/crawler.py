@@ -32,6 +32,7 @@ from src.model.node.node import NodeStatus, Node
 from src.executor.selenium_executor import SeleniumExecutor
 from src.util.decorators import calc_time
 from src.util.logger import get_logger
+from src.util import url_util
 
 logger = get_logger(__name__)
 

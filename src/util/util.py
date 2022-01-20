@@ -6,11 +6,9 @@ Copyright (C) 2020 TestWorks Inc.
 """
 import json
 import sys
-import time
+import ftplib
 import subprocess
 import string
-
-from urllib.request import urlopen
 
 from .logger import get_logger
 
@@ -111,3 +109,49 @@ def check_output(command):
 def get_valid_file_name(target_string):
     remove_punctuation_map = dict((ord(char), None) for char in string.punctuation)
     return target_string.translate(remove_punctuation_map)
+
+
+def connect_ftp(file_server, username, password):
+        """
+        FTP에 연결하는 함수
+        """
+        # FTP 서버에 접속
+        try:
+            session = ftplib.FTP(file_server, username, password)
+        except Exception as ex:
+            logger.error("%s", ex)
+
+        return session
+
+
+def upload_image(session, upload_path, upload_file):
+    """
+    FTP에 스크린샷 이미지를 업로드하는 함수
+    """
+    try:
+        session.storbinary('STOR ' + upload_path, upload_file)
+    except Exception as ex:
+        logger.error("%s", ex)
+
+
+def close_ftp(session, upload_file):
+    """
+    FTP 세션 및 파일을 닫는 함수
+    """
+    try:
+        session.quit()
+        upload_file.close()
+    except Exception as ex:
+        logger.error("%s", ex)
+
+
+def split_command(command):
+        """
+        = 로 구분되어있는 커맨드를 헤더와 바디로 나누어서 배열에 넣어 반환해 주는 함수
+        """
+        result = []
+        seperator_index = command.find("=")
+        result.append(command[0:seperator_index])
+        result.append(command[seperator_index + 1:])
+
+        return result

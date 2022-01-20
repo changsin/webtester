@@ -6,8 +6,8 @@
       "Browser" : "CH",
       "WebdriverName" :  "chrome",
       "WebdriverVersion": "97",
-      "API": "mac64",
-      "FileName": "chromedriver"
+      "API": "win32",
+      "FileName": "chromedriver.exe"
     }
   ]
 }
