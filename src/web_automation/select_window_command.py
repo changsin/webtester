@@ -61,6 +61,3 @@ class SelectWindowCommand(ICommand):
                     break   
         else:
             raise Exception("Invaild argument(title)...")
-
-    def get_instance(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        return SelectWindowCommand(web_driver, target, value, env, os_ver, browser, browser_version, test_option)

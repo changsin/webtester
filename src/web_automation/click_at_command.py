@@ -1,23 +1,18 @@
 """
-Copyright (C) 2020 TestWorks Inc.
-2020-02-23: 임정현(jhim) created.
+Copyright (C) 2022 TestWorks Inc.
+2022-01-22: (changsin@) created.
 """
 
+import ctypes
 import time
 
-from .i_command import ICommand
-
 from src.util.logger import get_logger
+from .i_command import ICommand
 
 logger = get_logger(__name__)
 
 
-class PauseCommand(ICommand):
-    """
-    pause 명령입니다.
-    target : sleep 시간(mili second)
-    """
-
+class ClickAtCommand(ICommand):
     def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
         self.web_driver = web_driver
         self.target = target
@@ -29,6 +24,15 @@ class PauseCommand(ICommand):
         self.test_option = test_option
 
     def execute(self):
-        logger.info("execute : pause : %s ms", self.target)
-        time.sleep(int(self.target) / 1000)
+        x, y = self.value.split(",")
+        x = int(x)
+        y = int(y)
+        logger.info("clickAt: {} {} {}".format(self.target, x, y))
+
+        ctypes.windll.user32.SetCursorPos(x, y)
+        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
+
+        time.sleep(2)
+
         return True

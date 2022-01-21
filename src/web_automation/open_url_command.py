@@ -39,6 +39,3 @@ class OpenURLCommand(ICommand):
             return ErrorCode.EDGE_IE_ONLY_SUPPORTED_PAGE # Internet Explorer 에서만 작동하는 url
 
         return True
-
-    def get_instance(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        return OpenURLCommand(web_driver, target, value, env, os_ver, browser, browser_version, test_option)

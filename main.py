@@ -1,5 +1,6 @@
 import argparse
 import multiprocessing
+import os
 
 import settings
 from src.executor.selenium_executor import SeleniumExecutor
@@ -60,6 +61,6 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # Analysis - *.json(graph)
-    args.options = ".\\settings\\options_aiworks.json"
+    args.options = os.path.join("settings", "options_aiworks.json")
     save_root = util.convert_path("{}/{}/{}/screenshot/".format(settings.FILE_PATH, 'projects', args.folder))
     graph_file_path = crawl(args.url, args.options)

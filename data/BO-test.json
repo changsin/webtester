@@ -84,148 +84,9 @@
       "Description": ""
     },
     {
-      "Command": "click",
-      "Target": "linkText=Tasks",
+      "Command": "open",
+      "Target": "https://optool.aiworks.co.kr/?id=125125",
       "Value": "",
-      "Targets": [
-        "linkText=Tasks",
-        "xpath=//*[@id=\"bo-lnb-userTasks\"]/a",
-        "xpath=//li[3]/a",
-        "css=#bo-lnb-userTasks > a"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "id=usertask_search",
-      "Value": "",
-      "Targets": [
-        "id=usertask_search",
-        "name=project",
-        "xpath=//*[@id=\"usertask_search\"]",
-        "xpath=//input[@id='usertask_search']",
-        "xpath=//input",
-        "css=#usertask_search"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "id=downshift-0-item-50",
-      "Value": "",
-      "Targets": [
-        "id=downshift-0-item-50",
-        "xpath=//*[@id=\"downshift-0-item-50\"]",
-        "xpath=//li[@id='downshift-0-item-50']",
-        "xpath=//li[51]",
-        "css=#downshift-0-item-50"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "id=usertask_search",
-      "Value": "",
-      "Targets": [
-        "id=usertask_search",
-        "name=project",
-        "xpath=//*[@id=\"usertask_search\"]",
-        "xpath=//input[@id='usertask_search']",
-        "xpath=//input",
-        "css=#usertask_search"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "id=downshift-0-item-0",
-      "Value": "",
-      "Targets": [
-        "id=downshift-0-item-0",
-        "xpath=//*[@id=\"downshift-0-item-0\"]",
-        "xpath=//li[@id='downshift-0-item-0']",
-        "xpath=//div/li",
-        "css=#downshift-0-item-0"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/div/div[2]/ul/li[4]/button",
-      "Value": "",
-      "Targets": [
-        "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/div/div[2]/ul/li[4]/button",
-        "xpath=//li[4]/button",
-        "css=#boop_03_my_task > div > div.bo_imageList.bo_bbs > div > div.jss50 > div > div > div.paging_wrap > ul > li.next > button"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/div/div[2]/ul/li[4]/button",
-      "Value": "",
-      "Targets": [
-        "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/div/div[2]/ul/li[4]/button",
-        "xpath=//li[4]/button",
-        "css=#boop_03_my_task > div > div.bo_imageList.bo_bbs > div > div.jss50 > div > div > div.paging_wrap > ul > li.next > button"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/div/div[2]/ul/li[4]/button",
-      "Value": "",
-      "Targets": [
-        "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/div/div[2]/ul/li[4]/button",
-        "xpath=//li[4]/button",
-        "css=#boop_03_my_task > div > div.bo_imageList.bo_bbs > div > div.jss50 > div > div > div.paging_wrap > ul > li.next > button"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/table/tbody/tr/td[3]/span",
-      "Value": "",
-      "Targets": [
-        "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/table/tbody/tr/td[3]/span",
-        "xpath=//td[3]/span",
-        "css=#boop_03_my_task > div > div.bo_imageList.bo_bbs > div > div.jss50 > div > table > tbody > tr:nth-child(1) > td:nth-child(3) > span"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "xpath=/html/body/div[3]/div/div[2]/div/div[2]/button/span",
-      "Value": "",
-      "Targets": [
-        "xpath=/html/body/div[3]/div/div[2]/div/div[2]/button/span",
-        "xpath=//div[2]/button/span",
-        "css=body > div:nth-child(7) > div > div.ant-modal-wrap > div > div.ant-modal-content > button > span"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "clickAndWait",
-      "Target": "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/table/tbody/tr/td[10]/div/a",
-      "Value": "",
-      "Targets": [
-        "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/table/tbody/tr/td[10]/div/a",
-        "xpath=//td[10]/div/a",
-        "css=#boop_03_my_task > div > div.bo_imageList.bo_bbs > div > div.jss50 > div > table > tbody > tr:nth-child(1) > td:nth-child(10) > div > a"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "id=shapeTypeSelector",
-      "Value": "",
-      "Targets": [
-        "id=shapeTypeSelector",
-        "xpath=//*[@id=\"shapeTypeSelector\"]",
-        "xpath=//ul[@id='shapeTypeSelector']",
-        "xpath=//section/div/ul",
-        "css=#shapeTypeSelector"
-      ],
       "Description": ""
     },
     {
@@ -255,20 +116,33 @@
       "Description": ""
     },
     {
-      "Command": "click",
-      "Target": "id=SvgjsRect1044",
-      "Value": "",
+      "Command": "sendKeys",
+      "Target": "id=currentFrameNumber",
+      "Value": "${KEY_BACKSPACE}",
       "Targets": [
-        "id=SvgjsRect1044",
-        "xpath=//*[@id=\"SvgjsRect1044\"]",
-        "css=#SvgjsRect1044"
-      ],
-      "Description": ""
+        "id=currentFrameNumber",
+        "xpath=//*[@id=\"currentFrameNumber\"]",
+        "xpath=//input[@id='currentFrameNumber']",
+        "xpath=//input",
+        "css=#currentFrameNumber"
+      ]
+    },
+    {
+      "Command": "sendKeys",
+      "Target": "id=currentFrameNumber",
+      "Value": "${KEY_ENTER}",
+      "Targets": [
+        "id=currentFrameNumber",
+        "xpath=//*[@id=\"currentFrameNumber\"]",
+        "xpath=//input[@id='currentFrameNumber']",
+        "xpath=//input",
+        "css=#currentFrameNumber"
+      ]
     },
     {
       "Command": "click",
       "Target": "id=nextButton",
-      "Value": "",
+      "Value": "5",
       "Targets": [
         "id=nextButton",
         "xpath=//*[@id=\"nextButton\"]",
@@ -280,36 +154,96 @@
     },
     {
       "Command": "click",
-      "Target": "id=SvgjsRect1152",
-      "Value": "",
+      "Target": "id=multipleNextButton",
+      "Value": "50",
       "Targets": [
-        "id=SvgjsRect1152",
-        "xpath=//*[@id=\"SvgjsRect1152\"]",
-        "css=#SvgjsRect1152"
+        "id=multipleNextButton",
+        "xpath=//*[@id=\"multipleNextButton\"]",
+        "xpath=//button[@id='multipleNextButton']",
+        "xpath=//div[7]/button",
+        "css=#multipleNextButton"
       ],
       "Description": ""
     },
     {
-      "Command": "clickAndWait",
-      "Target": "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/table/tbody/tr/td[10]/div/a",
+      "Command": "snapshot",
+      "Target": "id=mergeTracksButton",
       "Value": "",
       "Targets": [
-        "xpath=//*[@id=\"boop_03_my_task\"]/div/div/div/div[2]/div/table/tbody/tr/td[10]/div/a",
-        "xpath=//td[10]/div/a",
-        "css=#boop_03_my_task > div > div.bo_imageList.bo_bbs > div > div.jss45 > div > table > tbody > tr:nth-child(1) > td:nth-child(10) > div > a"
       ],
       "Description": ""
     },
     {
       "Command": "click",
-      "Target": "id=shapeTypeSelector",
+      "Target": "id=mergeTracksButton",
       "Value": "",
       "Targets": [
-        "id=shapeTypeSelector",
-        "xpath=//*[@id=\"shapeTypeSelector\"]",
-        "xpath=//ul[@id='shapeTypeSelector']",
-        "xpath=//section/div/ul",
-        "css=#shapeTypeSelector"
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAt",
+      "Target": "id=frameGrid",
+      "Value": "1100,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=nextButton",
+      "Value": "5",
+      "Targets": [
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
+        "xpath=//div[7]/button",
+        "css=#nextButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAt",
+      "Target": "id=frameGrid",
+      "Value": "1000,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
       ],
       "Description": ""
     }

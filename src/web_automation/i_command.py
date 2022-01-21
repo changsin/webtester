@@ -14,6 +14,3 @@ class ICommand:
 
     def execute(self):
         raise NotImplementedError
-
-    def get_instance(self, web_driver, target, value):
-        raise NotImplementedError

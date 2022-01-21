@@ -37,6 +37,3 @@ class TypeCommand(ICommand):
                 return False
 
         return True
-
-    def get_instance(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        return TypeCommand(web_driver, target, value, env, os_ver, browser, browser_version, test_option)

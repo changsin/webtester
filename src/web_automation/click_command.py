@@ -45,14 +45,20 @@ class ClickCommand(ICommand):
         단, PC 버전에서 문제가 있기 때문에 따로 분리해서 작성함
         """
         if self.test_option == "PC":
-            try:
-                element.click()
-            except exceptions.ElementClickInterceptedException as ex:
-                logger.error("%s", ex)
-                element.send_keys(Keys.ENTER)
-            except Exception as ex:
-                logger.error("%s", ex)
-                return False
+
+            count = 1
+            if self.value and len(self.value) > 0:
+                count = int(self.value)
+
+            for i in range(count):
+                try:
+                    element.click()
+                except exceptions.ElementClickInterceptedException as ex:
+                    logger.error("%s", ex)
+                    element.send_keys(Keys.ENTER)
+                except Exception as ex:
+                    logger.error("%s", ex)
+                    return False
 
         else:
             try:
@@ -70,6 +76,3 @@ class ClickCommand(ICommand):
                 return False
 
         return True
-
-    def get_instance(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        return ClickCommand(web_driver, target, value, env, os_ver, browser, browser_version, test_option)

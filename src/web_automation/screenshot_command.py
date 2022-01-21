@@ -71,6 +71,3 @@ class ScreenshotCommand(ICommand):
         pf_result = True
 
         return [pf_result, ftp_link]
-
-    def get_instance(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        return ScreenshotCommand(web_driver, target, value, env, os_ver, browser, browser_version, test_option)

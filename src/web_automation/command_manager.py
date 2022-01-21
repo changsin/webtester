@@ -20,6 +20,7 @@ from .assert_element_present_command import AssertElementPresentCommand
 from .assert_text_command import AssertTextCommand
 from .assert_title_command import AssertTitleCommand
 from .click_command import ClickCommand
+from .click_at_command import ClickAtCommand
 from .error_handle import error_handling
 from .mouse_over_command import MouseOverCommand
 from .open_url_command import OpenURLCommand
@@ -34,6 +35,7 @@ from .select_command import SelectCommand
 from .select_frame_command import SelectFrameCommand
 from .select_window_command import SelectWindowCommand
 from .send_keys_command import SendKeysCommand
+from .snapshot_command import SnapshotCommand
 from .type_command import TypeCommand
 from .verify_checked_command import VerifyCheckedCommand
 from .verify_element_present_command import VerifyElementPresentCommand
@@ -57,6 +59,7 @@ class CommandManager:
             "type": TypeCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "mouseOver": MouseOverCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "click": ClickCommand(0, 0, 0, 0, 0, 0, 0, 0),
+            "clickAt": ClickAtCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "clickAndWait": ClickCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "verifyTitle": VerifyTitleCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "verifyText": VerifyTextCommand(0, 0, 0, 0, 0, 0, 0, 0),
@@ -72,6 +75,7 @@ class CommandManager:
             "scrollPageBottom": ScrollBottomCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "screenShot": ScreenshotCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "sendKeys": SendKeysCommand(0, 0, 0, 0, 0, 0, 0, 0),
+            "snapshot": SnapshotCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "refresh": RefreshCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "assertText": AssertTextCommand(0, 0, 0, 0, 0, 0, 0, 0),
             "assertTitle": AssertTitleCommand(0, 0, 0, 0, 0, 0, 0, 0),     
@@ -256,7 +260,7 @@ class CommandManager:
             if "" == current_command:
                 break
 
-            new_command = self.commands_dict[current_command].get_instance(
+            new_command = self.commands_dict[current_command](
                 self.web_driver, current_target, current_value, current_env, current_os_ver, current_browser,
                 current_browser_version, current_test_option)
 

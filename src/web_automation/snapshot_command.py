@@ -1,20 +1,21 @@
 """
-Copyright (C) 2020 TestWorks Inc.
-2020-04-28: 신용진 (yjshin@) created.
+Copyright (C) 2022 TestWorks Inc.
+2022-01-22: (changsin@) created.
 """
 
-from .i_command import ICommand
+import ctypes
+import time
 
+from .i_command import ICommand
+from selenium.webdriver.common.action_chains import ActionChains
+
+from src.util.selenium_util import get_element, scroll_to_element
 from src.util.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-class AssertTitleCommand(ICommand):
-    """
-    타이틀 검증 커맨드 입니다.
-    """
-
+class SnapshotCommand(ICommand):
     def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
         self.web_driver = web_driver
         self.target = target
@@ -26,16 +27,11 @@ class AssertTitleCommand(ICommand):
         self.test_option = test_option
 
     def execute(self):
-        logger.info("assert title : %s", self.target)
-        
-        try:
-            title_text = self.web_driver.title
-        except Exception as ex:
-            logger.error("%s", ex)
-            return False
-        
-        if title_text != self.target:
-            logger.error("Don't match each value in title")
-            return False
+        script = """
+            return {...window.cvat.data.get()};
+            """
+        collected = self.web_driver.execute_script(script)
+
+        logger.info("class snapshot: {}".format(collected))
 
         return True
