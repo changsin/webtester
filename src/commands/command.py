@@ -1,19 +1,14 @@
 """
 Copyright (C) 2020 TestWorks Inc.
-2020-03-25: 조연진 (yjcho@) created.
+2020-02-18: 조규현 (ghjo@) created.
 """
-
-from .i_command import ICommand
+from abc import ABC, abstractmethod
 from src.util.logger import get_logger
 
 logger = get_logger(__name__)
 
 
-class ScrollTopCommand(ICommand):
-    """
-    스크롤 Top 명령입니다.
-    """
-
+class Command(ABC):
     def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
         self.web_driver = web_driver
         self.target = target
@@ -24,13 +19,6 @@ class ScrollTopCommand(ICommand):
         self.browser_version = browser_version
         self.test_option = test_option
 
+    @abstractmethod
     def execute(self):
-        logger.info("scrollTop: %s", self.target)
-
-        try:
-            self.web_driver.execute_script('window.scrollTo(%s, %s);' % (0, 0))
-        except Exception as ex:
-            logger.error(ex)
-            return False
-
-        return True
+        raise NotImplementedError

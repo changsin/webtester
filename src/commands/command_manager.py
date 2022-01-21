@@ -55,33 +55,33 @@ class CommandManager:
         self.commands = []
         self.commands_queue = []
         self.commands_dict = {
-            "open": OpenURLCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "type": TypeCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "mouseOver": MouseOverCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "click": ClickCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "clickAt": ClickAtCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "clickAndWait": ClickCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "verifyTitle": VerifyTitleCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "verifyText": VerifyTextCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "verifyChecked": VerifyCheckedCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "verifyElementPresent": VerifyElementPresentCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "pause": PauseCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "selectWindow": SelectWindowCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "selectFrame": SelectFrameCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "select": SelectCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "scrollPageUp": ScrollUpCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "scrollPageTop": ScrollTopCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "scrollPageDown": ScrollDownCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "scrollPageBottom": ScrollBottomCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "screenShot": ScreenshotCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "sendKeys": SendKeysCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "snapshot": SnapshotCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "refresh": RefreshCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "assertText": AssertTextCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "assertTitle": AssertTitleCommand(0, 0, 0, 0, 0, 0, 0, 0),     
-            "assertChecked": AssertCheckedCommand(0, 0, 0, 0, 0, 0, 0, 0),     
-            "assertElementPresent": AssertElementPresentCommand(0, 0, 0, 0, 0, 0, 0, 0),
-            "assertAlert": AssertAlertCommand(0, 0, 0, 0, 0, 0, 0, 0)
+            "open": OpenURLCommand,
+            "type": TypeCommand,
+            "mouseOver": MouseOverCommand,
+            "click": ClickCommand,
+            "clickAt": ClickAtCommand,
+            "clickAndWait": ClickCommand,
+            "verifyTitle": VerifyTitleCommand,
+            "verifyText": VerifyTextCommand,
+            "verifyChecked": VerifyCheckedCommand,
+            "verifyElementPresent": VerifyElementPresentCommand,
+            "pause": PauseCommand,
+            "selectWindow": SelectWindowCommand,
+            "selectFrame": SelectFrameCommand,
+            "select": SelectCommand,
+            "scrollPageUp": ScrollUpCommand,
+            "scrollPageTop": ScrollTopCommand,
+            "scrollPageDown": ScrollDownCommand,
+            "scrollPageBottom": ScrollBottomCommand,
+            "screenShot": ScreenshotCommand,
+            "sendKeys": SendKeysCommand,
+            "snapshot": SnapshotCommand,
+            "refresh": RefreshCommand,
+            "assertText": AssertTextCommand,
+            "assertTitle": AssertTitleCommand,     
+            "assertChecked": AssertCheckedCommand,     
+            "assertElementPresent": AssertElementPresentCommand,
+            "assertAlert": AssertAlertCommand
         }  # 여기에 사용할 명령어와 객체를 삽입합니다.
 
     def load_command_from_file(self, path) -> bool:
@@ -232,7 +232,8 @@ class CommandManager:
             if "" == current_command:
                 break
 
-            new_command = self.commands_dict[current_command].get_instance(
+            clazz = self.commands_dict[current_command]
+            new_command = clazz(
                 self.web_driver, current_target, current_value, current_env, current_os_ver, current_browser,
                 current_browser_version, current_test_option)
 

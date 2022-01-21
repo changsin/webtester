@@ -7,7 +7,7 @@ from src.executor.selenium_executor import SeleniumExecutor
 from src.model.options import Options
 from src.util import util
 from src.util.logger import get_logger
-from src.web_automation.command_manager import CommandManager
+from src.commands.command_manager import CommandManager
 
 logger = get_logger(__name__)
 

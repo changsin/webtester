@@ -3,28 +3,15 @@ Copyright (C) 2020 TestWorks Inc.
 2020-02-18: 조규현 (ghjo@) created.
 """
 
-from .i_command import ICommand
+from .command import Command
 
 from src.util.selenium_util import get_element
 from src.util.logger import get_logger
 
 logger = get_logger(__name__)
 
-class TypeCommand(ICommand):
-    """
-    텍스트 입력 명령입니다.
-    """
 
-    def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        self.web_driver = web_driver
-        self.target = target
-        self.value = value
-        self.env = env
-        self.os_ver = os_ver
-        self.browser = browser
-        self.browser_version = browser_version
-        self.test_option = test_option
-
+class TypeCommand(Command):
     def execute(self):
         logger.info("type : %s", self.value)
         element = get_element(self.web_driver, self.target)

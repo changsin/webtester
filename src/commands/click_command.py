@@ -4,7 +4,7 @@ Copyright (C) 2020 TestWorks Inc.
 2020-02-19: 조규현 (ghjo@) ie, edge의 불안정성으로 인해 click을 Javascript가 아닌 Selenium API 기반으로 변경
 """
 
-from .i_command import ICommand
+from .command import Command
 
 from selenium.common import exceptions
 from selenium.webdriver.common.keys import Keys
@@ -16,21 +16,7 @@ from src.util.logger import get_logger
 logger = get_logger(__name__)
 
 
-class ClickCommand(ICommand):
-    """
-    클릭 명령입니다.
-    """
-
-    def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        self.web_driver = web_driver
-        self.target = target
-        self.value = value
-        self.env = env
-        self.os_ver = os_ver
-        self.browser = browser
-        self.browser_version = browser_version
-        self.test_option = test_option
-
+class ClickCommand(Command):
     def execute(self):
         logger.info("click: %s", self.target)
         try:

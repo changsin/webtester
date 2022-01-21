@@ -6,7 +6,7 @@ Copyright (C) 2022 TestWorks Inc.
 import ctypes
 import time
 
-from .i_command import ICommand
+from .command import Command
 from selenium.webdriver.common.action_chains import ActionChains
 
 from src.util.selenium_util import get_element, scroll_to_element
@@ -15,17 +15,7 @@ from src.util.logger import get_logger
 logger = get_logger(__name__)
 
 
-class SnapshotCommand(ICommand):
-    def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        self.web_driver = web_driver
-        self.target = target
-        self.value = value
-        self.env = env
-        self.os_ver = os_ver
-        self.browser = browser
-        self.browser_version = browser_version
-        self.test_option = test_option
-
+class SnapshotCommand(Command):
     def execute(self):
         script = """
             return {...window.cvat.data.get()};

@@ -7,7 +7,7 @@ import os
 import settings
 import datetime
 
-from .i_command import ICommand
+from .command import Command
 
 from src.util.util import connect_ftp, upload_image, close_ftp
 from src.util.logger import get_logger
@@ -15,21 +15,10 @@ from src.util.logger import get_logger
 logger = get_logger(__name__)
 
 
-class ScreenshotCommand(ICommand):
+class ScreenshotCommand(Command):
     """
     스크린샷 명령입니다.
     """
-
-    def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        self.web_driver = web_driver
-        self.target = target
-        self.value = value
-        self.env = env
-        self.os_ver = os_ver
-        self.browser = browser
-        self.browser_version = browser_version
-        self.test_option = test_option
-
     def execute(self):
         """
         스크린샷 명령의 경우, 명령 수행 결과와 이미지 링크를 함께 리턴합니다.

@@ -7,22 +7,12 @@ import ctypes
 import time
 
 from src.util.logger import get_logger
-from .i_command import ICommand
+from .command import Command
 
 logger = get_logger(__name__)
 
 
-class ClickAtCommand(ICommand):
-    def __init__(self, web_driver, target, value, env, os_ver, browser, browser_version, test_option):
-        self.web_driver = web_driver
-        self.target = target
-        self.value = value
-        self.env = env
-        self.os_ver = os_ver
-        self.browser = browser
-        self.browser_version = browser_version
-        self.test_option = test_option
-
+class ClickAtCommand(Command):
     def execute(self):
         x, y = self.value.split(",")
         x = int(x)
