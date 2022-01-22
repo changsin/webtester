@@ -140,6 +140,32 @@
       ]
     },
     {
+      "Command": "click",
+      "Target": "id=nextButton",
+      "Value": "1",
+      "Targets": [
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
+        "xpath=//div[7]/button",
+        "css=#nextButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=multipleNextButton",
+      "Value": "1",
+      "Targets": [
+        "id=multipleNextButton",
+        "xpath=//*[@id=\"multipleNextButton\"]",
+        "xpath=//button[@id='multipleNextButton']",
+        "xpath=//div[7]/button",
+        "css=#multipleNextButton"
+      ],
+      "Description": ""
+    },
+    {
       "Command": "x_snapshot",
       "Target": "",
       "Value": "",
