@@ -3,8 +3,12 @@ Copyright (C) 2022 TestWorks Inc.
 2022-01-22: (changsin@) created.
 """
 
+import os
 import ctypes
-import autopy
+import random
+
+if os.name == "posix":
+    import autopy
 import time
 
 from src.util.logger import get_logger
@@ -14,55 +18,15 @@ logger = get_logger(__name__)
 
 
 class XClickAtCommand(Command):
-    def get_cur_boxes(self):
-        """
-        :return: bounding boxes of the current frame
-        """
-        script = """
-            return {...window.cvat.data.get()};
-            """
-        collected = self.web_driver.execute_script(script)
-        cur_frame = self.web_driver.find_element_by_id('currentFrameNumber')
-        cur_frame = int(cur_frame.get_attribute("value"))
-
-        tracks = collected['tracks']
-
-        tracks_to_track = []
-        for track in tracks:
-            if cur_frame >= track['frame']:
-                tracks_to_track.append(track)
-
-        visible_boxes = []
-        for track in tracks_to_track:
-            shapes = track['shapes']
-            shape_last = None
-            for shape in shapes:
-                if shape['frame'] <= cur_frame:
-                    shape_last = shape
-                    continue
-
-                if not shape_last['outside']:
-                    points = shape_last['points']
-                    object_number = track['object_number']
-                    visible_boxes.append((object_number, points))
-                    break
-
-        logger.info(visible_boxes)
-
-        return visible_boxes
-
     def execute(self):
         x, y = self.value.split(",")
         x = int(x)
         y = int(y)
-        logger.info("clickAt: {} {} {}".format(self.target, x, y))
+        # logger.info("clickAt: {} {} {}".format(self.target, x, y))
 
         # TODO: get the original image resolutions dynamically from the proper source
         image_width = 1920
         image_height = 1080
-
-        autopy.mouse.move(x, y)
-        autopy.mouse.click()
 
         # TODO: need to translate image coordiantes to screen coordinates
         frame_grid = self.web_driver.find_element_by_id('frameGrid')
@@ -71,11 +35,25 @@ class XClickAtCommand(Command):
         frame_width = frame_grid.rect['width']
         frame_height = frame_grid.rect['height']
 
+        canvas_x_offset = self.web_driver.execute_script("return window.screenX + (window.outerWidth - window.innerWidth) / 2 - window.scrollX;")
+        # Assume all the browser chrome is on the top of the screen and none on the bottom.
+        canvas_y_offset = self.web_driver.execute_script("return window.screenY + (window.outerHeight - window.innerHeight) - window.scrollY;")
+
+        # logger.info("canvas x, y offset {},{}".format(canvas_x_offset, canvas_y_offset))
+
+        browser_location = self.web_driver.get_window_position()
+        # logger.info("browser_location {}".format(browser_location))
+        offset_x += canvas_x_offset
+        offset_y += canvas_y_offset
+
+        logger.info("--->Before")
         visible_boxes = self.get_cur_boxes()
+
+        id_to_click = random.randint(0, len(visible_boxes))
 
         visible_boxes_framed = []
         for box in visible_boxes:
-            object_number, points = box
+            object_number, outside, occluded, points = box
             xtl, ytl, xbr, ybr = points
             xtl_framed = (frame_width * xtl)/image_width + offset_x
             ytl_framed = (frame_height * ytl)/image_height + offset_y
@@ -85,22 +63,42 @@ class XClickAtCommand(Command):
             visible_boxes_framed.append((object_number,
                                          [xtl_framed, ytl_framed, xbr_framed, ybr_framed]))
 
-        logger.info(visible_boxes_framed)
+        # logger.info(visible_boxes_framed)
 
-        for box in visible_boxes_framed:
-            object_number, points = box
-            xtl, ytl, xbr, ybr = points
+        for id, box in enumerate(visible_boxes_framed):
+            if id == id_to_click:
+                object_number, points = box
+                xtl, ytl, xbr, ybr = points
 
-            # autopy.mouse.move(int(xtl), int(ytl))
-            autopy.mouse.move(int(frame_width), int(frame_height) - 100)
-            time.sleep(3)
-            autopy.mouse.click()
+                to_click_x = int(xtl) + 8
+                to_click_y = int(ytl) + 8
 
-        # This works only in Windows
-        # ctypes.windll.user32.SetCursorPos(x, y)
-        # ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
-        # ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
+                cur_frame = self.web_driver.find_element_by_id('currentFrameNumber')
+                cur_frame = int(cur_frame.get_attribute("value"))
+                logger.info("### Click object_number={} at {},{} on frame={} ###".format(object_number,
+                                                                                       to_click_x, to_click_y,
+                                                                                       cur_frame))
 
-        time.sleep(2)
+                # logger.info("frameGrid x={}, y={}, width={}, height={}".format(offset_x, offset_y, frame_width, frame_height))
+
+                # ctypes.windll.user32.SetCursorPos(int(offset_x), int(offset_y))
+                # ctypes.windll.user32.SetCursorPos(int(frame_width), int(frame_height))
+                # logger.info("clickAt {},{}".format(to_click_x, to_click_y))
+
+                if os.name == "posix":
+                    autopy.mouse.move(to_click_x, to_click_y)
+                    autopy.mouse.click()
+                elif os.name == "nt":
+                    # This works only in Windows
+                    ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
+                    ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+                    ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
+                else:
+                    logger.warning("OS is " + os.name)
+
+        time.sleep(1)
+
+        logger.info("<---After")
+        self.test_data = self.get_cur_boxes()
 
         return True

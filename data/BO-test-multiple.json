@@ -85,7 +85,7 @@
     },
     {
       "Command": "open",
-      "Target": "https://optool.aiworks.co.kr/?id=106944",
+      "Target": "https://optool.aiworks.co.kr/?id=125024",
       "Value": "",
       "Description": ""
     },
@@ -154,6 +154,19 @@
       "TestOption": "PC"
     },
     {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
       "Command": "x_snapshot",
       "Target": "",
       "Value": "",
@@ -163,38 +176,14 @@
     },
     {
       "Command": "click",
-      "Target": "id=mergeTracksButton",
-      "Value": "",
-      "Targets": [
-        "id=mergeTracksButton",
-        "xpath=//*[@id=\"mergeTracksButton\"]",
-        "xpath=//button[@id='mergeTracksButton']",
-        "xpath=//div[4]/div[5]/button",
-        "css=#mergeTracksButton"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "x_clickAt",
-      "Target": "id=frameGrid",
-      "Value": "500,500",
-      "Targets": [
-        "id=frameGrid",
-        "xpath=//*[@id=\"frameGrid\"]",
-        "css=#frameGrid"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "id=multipleNextButton",
+      "Target": "id=nextButton",
       "Value": "1",
       "Targets": [
-        "id=multipleNextButton",
-        "xpath=//*[@id=\"multipleNextButton\"]",
-        "xpath=//button[@id='multipleNextButton']",
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
         "xpath=//div[7]/button",
-        "css=#multipleNextButton"
+        "css=#nextButton"
       ],
       "Description": ""
     },
@@ -223,9 +212,125 @@
       "Description": ""
     },
     {
-      "Command": "open",
-      "Target": "https://optool.aiworks.co.kr/?id=106944",
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
       "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=nextButton",
+      "Value": "1",
+      "Targets": [
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
+        "xpath=//div[7]/button",
+        "css=#nextButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=nextButton",
+      "Value": "1",
+      "Targets": [
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
+        "xpath=//div[7]/button",
+        "css=#nextButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
       "Description": ""
     }
   ]

@@ -2,6 +2,7 @@
 Copyright (C) 2020 TestWorks Inc.
 2020-02-18: 조규현 (ghjo@) created.
 """
+import time
 
 from .e_error_code import ErrorCode
 from .command import Command
@@ -27,4 +28,5 @@ class OpenURLCommand(Command):
         if 'Internet Explorer 필요' in self.web_driver.title and 'MicrosoftEdge' in self.web_driver.name:
             return ErrorCode.EDGE_IE_ONLY_SUPPORTED_PAGE # Internet Explorer 에서만 작동하는 url
 
+        time.sleep(10)
         return True

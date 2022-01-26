@@ -57,6 +57,7 @@ class SeleniumExecutor:
         # prefs = {'profile.managed_default_content_settings.images': 2}
         # coptions.add_experimental_option("prefs", prefs)
 
+        coptions.add_argument('--start-maximized')
         coptions.add_argument('--disable-infobars')
         # coptions.add_argument('--disable-popup-blocking')
         # coptions.add_argument('--window-size=1920x1080')

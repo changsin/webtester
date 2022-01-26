@@ -85,7 +85,7 @@
     },
     {
       "Command": "open",
-      "Target": "https://optool.aiworks.co.kr/?id=106944",
+      "Target": "https://optool.aiworks.co.kr/?id=125125",
       "Value": "",
       "Description": ""
     },
@@ -223,9 +223,77 @@
       "Description": ""
     },
     {
-      "Command": "open",
-      "Target": "https://optool.aiworks.co.kr/?id=106944",
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=multipleNextButton",
+      "Value": "1",
+      "Targets": [
+        "id=multipleNextButton",
+        "xpath=//*[@id=\"multipleNextButton\"]",
+        "xpath=//button[@id='multipleNextButton']",
+        "xpath=//div[7]/button",
+        "css=#multipleNextButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
       "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=multipleNextButton",
+      "Value": "1",
+      "Targets": [
+        "id=multipleNextButton",
+        "xpath=//*[@id=\"multipleNextButton\"]",
+        "xpath=//button[@id='multipleNextButton']",
+        "xpath=//div[7]/button",
+        "css=#multipleNextButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
+      ],
       "Description": ""
     }
   ]

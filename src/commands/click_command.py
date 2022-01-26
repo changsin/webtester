@@ -34,6 +34,9 @@ class ClickCommand(Command):
         모바일에서 스와이프 기능이 없어 클릭 못하는 element는 자바스크립트로 클릭 함수를 호출하면 클릭 가능
         단, PC 버전에서 문제가 있기 때문에 따로 분리해서 작성함
         """
+        logger.info("--->Before")
+        visible_boxes = self.get_cur_boxes()
+
         if self.test_option == "PC":
             for i in range(count):
                 try:
@@ -44,7 +47,8 @@ class ClickCommand(Command):
                 except Exception as ex:
                     logger.error("%s", ex)
                     return False
-                time.sleep(1)
+                # logger.info("waiting 1ms")
+                time.sleep(10)
 
         else:
             try:
@@ -60,5 +64,8 @@ class ClickCommand(Command):
             except Exception as ex:
                 logger.error("%s", ex)
                 return False
+
+        logger.info("<---After")
+        self.test_data = self.get_cur_boxes()
 
         return True
