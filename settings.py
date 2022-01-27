@@ -26,3 +26,5 @@ TARGET_FILE_PATH = util.convert_path(FILE_PATH + "/" + TARGET_FILE)
 CHROME_DRIVER_PATH = util.convert_path(FILE_PATH + '/bin/driver/' + WEBDRIVER_INFO[0]["WebdriverName"] + "/" + \
                      WEBDRIVER_INFO[0]["WebdriverVersion"] + '/' + WEBDRIVER_INFO[0]["API"] + "/" + \
                      WEBDRIVER_INFO[0]["FileName"])
+
+HOST_NAME = "tw"

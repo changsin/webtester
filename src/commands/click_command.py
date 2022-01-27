@@ -23,6 +23,7 @@ class ClickCommand(Command):
         if self.value and len(self.value) > 0:
             count = int(self.value)
         logger.info("click: {} {}".format(self.target, count))
+
         try:
             element = get_element(self.web_driver, self.target)
             scroll_to_element(self.web_driver, element)
@@ -35,7 +36,7 @@ class ClickCommand(Command):
         단, PC 버전에서 문제가 있기 때문에 따로 분리해서 작성함
         """
         logger.info("--->Before")
-        visible_boxes = self.get_cur_boxes()
+        self.get_cur_boxes()
 
         if self.test_option == "PC":
             for i in range(count):

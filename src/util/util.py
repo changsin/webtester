@@ -72,6 +72,9 @@ def safe_get_dict_item(data_dict, key):
     :param key:
     :return: item if found, Non otherwise
     """
+    if not data_dict:
+        return None
+
     value = data_dict.get(key)
     if value is not None:
         obj = data_dict[key]

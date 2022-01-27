@@ -12,6 +12,8 @@ if os.name == "posix":
 import time
 
 from src.util.logger import get_logger
+from src.util.util import safe_get_dict_item
+
 from .command import Command
 
 logger = get_logger(__name__)
@@ -19,9 +21,10 @@ logger = get_logger(__name__)
 
 class XClickAtCommand(Command):
     def execute(self):
-        x, y = self.value.split(",")
-        x = int(x)
-        y = int(y)
+        if self.value and len(self.value) > 0:
+            x, y = self.value.split(",")
+            x = int(x)
+            y = int(y)
         # logger.info("clickAt: {} {} {}".format(self.target, x, y))
 
         # TODO: get the original image resolutions dynamically from the proper source
@@ -50,6 +53,9 @@ class XClickAtCommand(Command):
         visible_boxes = self.get_cur_boxes()
 
         id_to_click = random.randint(0, len(visible_boxes))
+        if safe_get_dict_item(self.test_data, "clicked"):
+            if id_to_click in safe_get_dict_item(self.test_data, "clicked"):
+                id_to_click += 1
 
         visible_boxes_framed = []
         for box in visible_boxes:
@@ -64,7 +70,6 @@ class XClickAtCommand(Command):
                                          [xtl_framed, ytl_framed, xbr_framed, ybr_framed]))
 
         # logger.info(visible_boxes_framed)
-
         for id, box in enumerate(visible_boxes_framed):
             if id == id_to_click:
                 object_number, points = box
@@ -73,6 +78,7 @@ class XClickAtCommand(Command):
                 to_click_x = int(xtl) + 8
                 to_click_y = int(ytl) + 8
 
+                self.add_clicked(int(object_number))
                 cur_frame = self.web_driver.find_element_by_id('currentFrameNumber')
                 cur_frame = int(cur_frame.get_attribute("value"))
                 logger.info("### Click object_number={} at {},{} on frame={} ###".format(object_number,
@@ -89,7 +95,6 @@ class XClickAtCommand(Command):
                     autopy.mouse.move(to_click_x, to_click_y)
                     autopy.mouse.click()
                 elif os.name == "nt":
-                    # This works only in Windows
                     ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
                     ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
                     ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
@@ -98,7 +103,7 @@ class XClickAtCommand(Command):
 
         time.sleep(1)
 
+        self.test_data["boxes"] = self.get_cur_boxes()
         logger.info("<---After")
-        self.test_data = self.get_cur_boxes()
 
         return True

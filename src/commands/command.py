@@ -1,9 +1,9 @@
 """
 Copyright (C) 2020 TestWorks Inc.
-2020-02-18: 조규현 (ghjo@) created.
 """
 from abc import ABC, abstractmethod
 from src.util.logger import get_logger
+from src.util.util import safe_get_dict_item
 
 logger = get_logger(__name__)
 
@@ -18,7 +18,13 @@ class Command(ABC):
         self.browser = browser
         self.browser_version = browser_version
         self.test_option = test_option
-        self.test_data = None
+        self.test_data = {}
+
+    def add_clicked(self, id):
+        if safe_get_dict_item(self.test_data, "clicked"):
+            self.test_data["clicked"].append(id)
+        else:
+            self.test_data["clicked"] = [id]
 
     @abstractmethod
     def execute(self):
@@ -95,7 +101,7 @@ class Command(ABC):
                             "select": track['select'],
                             "shapes": shapes})
 
-        # logger.info("all idx: {}".format(idx_all))
+        logger.info("all idx: {}".format(idx_all))
 
         return visible_boxes
 

@@ -148,6 +148,7 @@ class CommandManager:
 
         """
         """
+
         for command in commands:
             # 커맨드 안의 Value를 변수로 저장합니다.
             current_command = command["Command"]
@@ -164,6 +165,11 @@ class CommandManager:
             if "" == current_command:
                 break
 
+            # if "BeginLoop" == current_command:
+            #
+            #     while
+            #
+            # else:
             new_command = self.commands_dict[current_command](
                 self.web_driver, current_target, current_value,
                 env, os_ver, browser, browser_version, current_test_option)
