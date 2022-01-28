@@ -17,8 +17,13 @@ logger = get_logger(__name__)
 
 class XKeybdCommand(Command):
     def execute(self):
-        # keystroke = int(self.value, 16)
-        key = self.value
+        # https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+        if not self.value:
+            return True
+
+        key = int(self.value, 16)
+
+        logger.info("Key press {}".format(self.value))
 
         if os.name == "posix":
             autopy.key.type_string(key)
@@ -28,6 +33,6 @@ class XKeybdCommand(Command):
         else:
             logger.warning("OS is " + os.name)
 
-        time.sleep(2)
+        time.sleep(1)
 
         return True

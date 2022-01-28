@@ -72,19 +72,21 @@ def safe_get_dict_item(data_dict, key):
     :param key:
     :return: item if found, Non otherwise
     """
-    if not data_dict:
-        return None
+    value = None
+    if data_dict:
+        if key in data_dict.keys():
+            value = data_dict[key]
 
-    value = data_dict.get(key)
-    if value is not None:
-        obj = data_dict[key]
-        if obj == 'None':
-            return None
-        else:
-            return obj
-    else:
-        return None
+            if value == "None":
+                value = None
 
+    return value
+
+def _safe_get(command, k):
+    value = None
+    if k in command.keys():
+        value = command[k]
+    return value
 
 def to_file(file_name, data):
     with open(file_name,  'w', encoding="utf-8") as json_file:

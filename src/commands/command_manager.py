@@ -7,6 +7,7 @@ import time
 
 from src.util.logger import get_logger
 from src.util.selenium_util import wait_for_page_load
+from src.util.util import safe_get_dict_item
 from .assert_alert_command import AssertAlertCommand
 from .assert_checked_command import AssertCheckedCommand
 from .assert_element_present_command import AssertElementPresentCommand
@@ -140,36 +141,22 @@ class CommandManager:
         return 0
 
     def __enqueue_commands(self, commands, test_option="PC"):
-        def _safe_get(command, k):
-            value = None
-            if k in command.keys():
-                value = command[k]
-            return value
-
-        """
-        """
-
         for command in commands:
             # 커맨드 안의 Value를 변수로 저장합니다.
             current_command = command["Command"]
             current_target = command["Target"]
             current_value = command["Value"]
 
-            env = _safe_get(command, "Env")
-            os_ver = _safe_get(command, "OsVer")
-            browser = _safe_get(command, "Browser")
-            browser_version = _safe_get(command, "BrowserVersion")
+            env = safe_get_dict_item(command, "Env")
+            os_ver = safe_get_dict_item(command, "OsVer")
+            browser = safe_get_dict_item(command, "Browser")
+            browser_version = safe_get_dict_item(command, "BrowserVersion")
 
-            current_test_option = _safe_get(command, "TestOption")
+            current_test_option = safe_get_dict_item(command, "TestOption")
 
             if "" == current_command:
                 break
 
-            # if "BeginLoop" == current_command:
-            #
-            #     while
-            #
-            # else:
             new_command = self.commands_dict[current_command](
                 self.web_driver, current_target, current_value,
                 env, os_ver, browser, browser_version, current_test_option)

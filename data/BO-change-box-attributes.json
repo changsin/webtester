@@ -1,0 +1,240 @@
+{
+  "Name": "BO-test",
+  "CreationDate": "2022-1-20",
+  "Commands": [
+    {
+      "Command": "open",
+      "Target": "https://aiworks.co.kr/webadm/login",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=myId",
+      "Value": "",
+      "Targets": [
+        "id=myId",
+        "name=id",
+        "xpath=//*[@id=\"myId\"]",
+        "xpath=//input[@id='myId']",
+        "xpath=//li/input",
+        "css=#myId"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=myId",
+      "Value": "admin",
+      "Targets": [
+        "id=myId",
+        "name=id",
+        "xpath=//*[@id=\"myId\"]",
+        "xpath=//input[@id='myId']",
+        "xpath=//li/input",
+        "css=#myId"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=myPw",
+      "Value": "rhksflwk1!",
+      "Targets": [
+        "id=myPw",
+        "name=input_pass",
+        "xpath=//*[@id=\"myPw\"]",
+        "xpath=//input[@id='myPw']",
+        "xpath=//li[2]/input",
+        "css=#myPw"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "linkText=LOGIN",
+      "Value": "",
+      "Targets": [
+        "linkText=LOGIN",
+        "xpath=//*[@id=\"[object HTMLInputElement]\"]/ul/li[3]/a",
+        "xpath=//a[@onclick='login()']",
+        "xpath=//a",
+        "css=#[object HTMLInputElement] > ul > li.tr > a"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "linkText=Blackolive",
+      "Value": "",
+      "Targets": [
+        "linkText=Blackolive",
+        "id=boLoginUi1",
+        "xpath=//*[@id=\"boLoginUi1\"]",
+        "xpath=//a[@id='boLoginUi1']",
+        "xpath=//div[2]/a",
+        "css=#boLoginUi1"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "selectWindow",
+      "Target": "tab=1",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "open",
+      "Target": "https://optool.aiworks.co.kr/?id=113136",
+      "Value": "",
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=currentFrameNumber",
+      "Value": "",
+      "Targets": [
+        "id=currentFrameNumber",
+        "xpath=//*[@id=\"currentFrameNumber\"]",
+        "xpath=//input[@id='currentFrameNumber']",
+        "xpath=//input",
+        "css=#currentFrameNumber"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "type",
+      "Target": "id=currentFrameNumber",
+      "Value": "500",
+      "Targets": [
+        "id=currentFrameNumber",
+        "xpath=//*[@id=\"currentFrameNumber\"]",
+        "xpath=//input[@id='currentFrameNumber']",
+        "xpath=//input",
+        "css=#currentFrameNumber"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "sendKeys",
+      "Target": "id=currentFrameNumber",
+      "Value": "${KEY_BACKSPACE}",
+      "Targets": [
+        "id=currentFrameNumber",
+        "xpath=//*[@id=\"currentFrameNumber\"]",
+        "xpath=//input[@id='currentFrameNumber']",
+        "xpath=//input",
+        "css=#currentFrameNumber"
+      ]
+    },
+    {
+      "Command": "sendKeys",
+      "Target": "id=currentFrameNumber",
+      "Value": "${KEY_ENTER}",
+      "Targets": [
+        "id=currentFrameNumber",
+        "xpath=//*[@id=\"currentFrameNumber\"]",
+        "xpath=//input[@id='currentFrameNumber']",
+        "xpath=//input",
+        "css=#currentFrameNumber"
+      ]
+    },
+    {
+      "Command": "click",
+      "Target": "id=multipleNextButton",
+      "Value": "2",
+      "Targets": [
+        "id=multipleNextButton",
+        "xpath=//*[@id=\"multipleNextButton\"]",
+        "xpath=//button[@id='multipleNextButton']",
+        "xpath=//div[7]/button",
+        "css=#multipleNextButton"
+      ],
+      "Description": "",
+      "TestOption": "PC"
+    },
+    {
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_keybd",
+      "Target": "",
+      "Value": "",
+      "Targets": [
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_keybd",
+      "Target": "",
+      "Value": "",
+      "Targets": [
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "click",
+      "Target": "id=nextButton",
+      "Value": "2",
+      "Targets": [
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
+        "xpath=//div[7]/button",
+        "css=#nextButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "500,500",
+      "Targets": [
+        "id=frameGrid",
+        "xpath=//*[@id=\"frameGrid\"]",
+        "css=#frameGrid"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "screenShot",
+      "Target": "",
+      "Value": "2",
+      "Targets": [
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_keybd",
+      "Target": "",
+      "Value": "0x48",
+      "Targets": [
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "x_keybd",
+      "Target": "",
+      "Value": "0x48",
+      "Targets": [
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "screenShot",
+      "Target": "",
+      "Value": "1",
+      "Targets": [
+      ],
+      "Description": ""
+    }
+  ]
+}

@@ -83,7 +83,7 @@ class Command(ABC):
         for id, outside, occluded, points in visible_boxes:
             idx_visible.append(id)
 
-        logger.info("visible idx: {}".format(idx_visible))
+        logger.info("visible idx: {} {}".format(len(idx_visible), idx_visible))
 
         idx_all = []
         for track in tracks:
@@ -96,12 +96,13 @@ class Command(ABC):
                                "occluded": shape['occluded'],
                                "z_order": shape['z_order']})
 
-            idx_all.append({"object_number": track['object_number'],
-                            "id": track['id'],
-                            "select": track['select'],
-                            "shapes": shapes})
+            # idx_all.append({"object_number": track['object_number'],
+            #                 "id": track['id'],
+            #                 "select": track['select'],
+            #                 "shapes": shapes})
+            idx_all.append({"object_number": track['object_number']})
 
-        logger.info("all idx: {}".format(idx_all))
+        logger.info("all idx: {} {}".format(len(idx_all), idx_all))
 
         return visible_boxes
 

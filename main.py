@@ -30,7 +30,7 @@ def crawl(start_url, options_file_path):
 
     selenium_executor = SeleniumExecutor.create(settings.CHROME_DRIVER_PATH, options)
 
-    script_file_path = "data/BO-test-multiple.json"
+    script_file_path = "data/BO-change-box-attributes.json"
     exec_result = run_script(selenium_executor.driver, script_file_path)
 
     # crawler = Crawler(selenium_executor.driver, options, path)

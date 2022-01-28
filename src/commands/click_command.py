@@ -49,7 +49,7 @@ class ClickCommand(Command):
                     logger.error("%s", ex)
                     return False
                 # logger.info("waiting 1ms")
-                time.sleep(10)
+                time.sleep(1)
 
         else:
             try:

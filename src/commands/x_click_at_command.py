@@ -75,8 +75,8 @@ class XClickAtCommand(Command):
                 object_number, points = box
                 xtl, ytl, xbr, ybr = points
 
-                to_click_x = int(xtl) + 8
-                to_click_y = int(ytl) + 8
+                to_click_x = int(xtl)
+                to_click_y = int(ytl)
 
                 self.add_clicked(int(object_number))
                 cur_frame = self.web_driver.find_element_by_id('currentFrameNumber')
@@ -97,6 +97,12 @@ class XClickAtCommand(Command):
                 elif os.name == "nt":
                     ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
                     ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+
+                    move_x = random.randint(0, 10)
+                    move_y = random.randint(0, 10)
+                    logger.info("Move {},{}".format(move_x, move_y))
+                    ctypes.windll.user32.mouse_event(1, move_x, move_y, 0, 0)
+                    time.sleep(1)
                     ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
                 else:
                     logger.warning("OS is " + os.name)
