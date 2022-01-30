@@ -33,6 +33,6 @@ class XKeybdCommand(Command):
         else:
             logger.warning("OS is " + os.name)
 
-        time.sleep(1)
+        time.sleep(0.1)
 
         return True

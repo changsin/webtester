@@ -38,16 +38,18 @@ class XClickAtCommand(Command):
         frame_width = frame_grid.rect['width']
         frame_height = frame_grid.rect['height']
 
-        canvas_x_offset = self.web_driver.execute_script("return window.screenX + (window.outerWidth - window.innerWidth) / 2 - window.scrollX;")
         # Assume all the browser chrome is on the top of the screen and none on the bottom.
-        canvas_y_offset = self.web_driver.execute_script("return window.screenY + (window.outerHeight - window.innerHeight) - window.scrollY;")
+        script_offset_x = "return window.screenX + (window.outerWidth - window.innerWidth) / 2 - window.scrollX;"
+        script_offset_y = "return window.screenY + (window.outerHeight - window.innerHeight) - window.scrollY;"
+        viewport_offset_x = self.web_driver.execute_script(script_offset_x)
+        viewport_offset_y = self.web_driver.execute_script(script_offset_y)
 
-        # logger.info("canvas x, y offset {},{}".format(canvas_x_offset, canvas_y_offset))
+        # logger.info("canvas x, y offset {},{}".format(viewport_offset_x, viewport_offset_y))
 
         browser_location = self.web_driver.get_window_position()
         # logger.info("browser_location {}".format(browser_location))
-        offset_x += canvas_x_offset
-        offset_y += canvas_y_offset
+        offset_x += viewport_offset_x
+        offset_y += viewport_offset_y
 
         logger.info("--->Before")
         visible_boxes = self.get_cur_boxes()
@@ -75,8 +77,8 @@ class XClickAtCommand(Command):
                 object_number, points = box
                 xtl, ytl, xbr, ybr = points
 
-                to_click_x = int(xtl)
-                to_click_y = int(ytl)
+                to_click_x = int(xtl) + 1
+                to_click_y = int(ytl) + 1
 
                 self.add_clicked(int(object_number))
                 cur_frame = self.web_driver.find_element_by_id('currentFrameNumber')
@@ -97,17 +99,23 @@ class XClickAtCommand(Command):
                 elif os.name == "nt":
                     ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
                     ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+                    # need some time to move
+                    time.sleep(0.1)
 
-                    move_x = random.randint(0, 10)
-                    move_y = random.randint(0, 10)
+                    direction = random.randint(1, 2)
+                    if direction == 2:
+                        direction = -1
+                    move_x = random.randint(0, 15) * direction
+                    move_y = random.randint(0, 15) * direction
+
                     logger.info("Move {},{}".format(move_x, move_y))
                     ctypes.windll.user32.mouse_event(1, move_x, move_y, 0, 0)
-                    time.sleep(1)
+                    time.sleep(0.1)
                     ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
                 else:
                     logger.warning("OS is " + os.name)
 
-        time.sleep(1)
+        time.sleep(0.1)
 
         self.test_data["boxes"] = self.get_cur_boxes()
         logger.info("<---After")

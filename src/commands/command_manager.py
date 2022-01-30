@@ -3,6 +3,7 @@ Copyright (C) 2022 TestWorks Inc.
 """
 
 import json
+import random
 import time
 
 from src.util.logger import get_logger
@@ -38,6 +39,9 @@ from .x_keybd_command import XKeybdCommand
 from .x_snapshot_command import XSnapshotCommand
 
 logger = get_logger(__name__)
+
+BEGIN_LOOP = "BeginLoop"
+END_LOOP = "EndLoop"
 
 
 class CommandManager:
@@ -141,6 +145,8 @@ class CommandManager:
         return 0
 
     def __enqueue_commands(self, commands, test_option="PC"):
+        loop_began = False
+        loop_queue = []
         for command in commands:
             # 커맨드 안의 Value를 변수로 저장합니다.
             current_command = command["Command"]
@@ -156,6 +162,27 @@ class CommandManager:
 
             if "" == current_command:
                 break
+
+            if BEGIN_LOOP == current_command:
+                loop_began = True
+                continue
+
+            if loop_began:
+                if END_LOOP != current_command:
+                    new_command = self.commands_dict[current_command](
+                        self.web_driver, current_target, current_value,
+                        env, os_ver, browser, browser_version, current_test_option)
+
+                    loop_queue.append(new_command)
+                    continue
+                else:
+                    loop_began = False
+                    times = int(current_value)
+
+                    for _ in range(times):
+                        id = random.randint(0, len(loop_queue) - 1)
+                        self.commands_queue.append(loop_queue[id])
+                continue
 
             new_command = self.commands_dict[current_command](
                 self.web_driver, current_target, current_value,

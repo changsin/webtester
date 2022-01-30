@@ -35,7 +35,7 @@ class Command(ABC):
         :return: bounding boxes of the current frame
         """
         script = """
-            function getSafe(defaultVal) {
+            function getCVATDataSafe(defaultVal) {
               try {
                 return {...window.cvat.data.get()};
               } catch (e) {
@@ -43,7 +43,7 @@ class Command(ABC):
               }
             }
             console.log("log");
-            return getSafe("undefined");
+            return getCVATDataSafe("undefined");
             """
         collected = self.web_driver.execute_script(script)
         # logger.info("collected {}".format(collected))

@@ -105,7 +105,7 @@
     {
       "Command": "type",
       "Target": "id=currentFrameNumber",
-      "Value": "500",
+      "Value": "5",
       "Targets": [
         "id=currentFrameNumber",
         "xpath=//*[@id=\"currentFrameNumber\"]",
@@ -152,6 +152,14 @@
       ],
       "Description": "",
       "TestOption": "PC"
+    },
+    {
+      "Command": "BeginLoop",
+      "Target": "",
+      "Value": "5",
+      "Targets": [
+      ],
+      "Description": ""
     },
     {
       "Command": "x_clickAt",
@@ -205,10 +213,15 @@
       "Description": ""
     },
     {
-      "Command": "screenShot",
-      "Target": "",
+      "Command": "click",
+      "Target": "id=nextButton",
       "Value": "2",
       "Targets": [
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
+        "xpath=//div[7]/button",
+        "css=#nextButton"
       ],
       "Description": ""
     },
@@ -221,9 +234,9 @@
       "Description": ""
     },
     {
-      "Command": "x_keybd",
+      "Command": "EndLoop",
       "Target": "",
-      "Value": "0x48",
+      "Value": "500",
       "Targets": [
       ],
       "Description": ""
