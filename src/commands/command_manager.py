@@ -140,7 +140,6 @@ class CommandManager:
             if not result:
                 return index+1
 
-        time.sleep(2)
         logger.info('Command finish')
         return 0
 
@@ -148,7 +147,6 @@ class CommandManager:
         loop_began = False
         loop_queue = []
         for command in commands:
-            # 커맨드 안의 Value를 변수로 저장합니다.
             current_command = command["Command"]
             current_target = command["Target"]
             current_value = command["Value"]

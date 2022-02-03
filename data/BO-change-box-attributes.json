@@ -85,7 +85,7 @@
     },
     {
       "Command": "open",
-      "Target": "https://optool.aiworks.co.kr/?id=113136",
+      "Target": "https://optool.aiworks.co.kr/?id=44750",
       "Value": "",
       "Description": ""
     },
@@ -150,8 +150,7 @@
         "xpath=//div[7]/button",
         "css=#multipleNextButton"
       ],
-      "Description": "",
-      "TestOption": "PC"
+      "Description": ""
     },
     {
       "Command": "BeginLoop",
@@ -164,11 +163,8 @@
     {
       "Command": "x_clickAt",
       "Target": "id=frameGrid",
-      "Value": "500,500",
+      "Value": "{RANDOM}",
       "Targets": [
-        "id=frameGrid",
-        "xpath=//*[@id=\"frameGrid\"]",
-        "css=#frameGrid"
       ],
       "Description": ""
     },
@@ -209,19 +205,6 @@
         "id=frameGrid",
         "xpath=//*[@id=\"frameGrid\"]",
         "css=#frameGrid"
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "click",
-      "Target": "id=nextButton",
-      "Value": "2",
-      "Targets": [
-        "id=nextButton",
-        "xpath=//*[@id=\"nextButton\"]",
-        "xpath=//button[@id='nextButton']",
-        "xpath=//div[7]/button",
-        "css=#nextButton"
       ],
       "Description": ""
     },
@@ -236,7 +219,7 @@
     {
       "Command": "EndLoop",
       "Target": "",
-      "Value": "500",
+      "Value": "5",
       "Targets": [
       ],
       "Description": ""
