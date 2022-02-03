@@ -59,7 +59,39 @@ def to_screen(pt_image, offsets, element_res, image_res=HD_RES):
     return screen_x, screen_y
 
 
-def click_at(to_click_x, to_click_y):
+def clamp(n, smallest, largest): return max(smallest, min(n, largest))
+
+
+def to_move(x, y, x_range, y_range, offsets, element_res):
+    offset_x, offset_y = offsets
+    element_width, element_height = element_res
+    # direction = random.randint(1, 2)
+    # if direction == 2:
+    #     direction = -1
+    lower_bound_x = offset_x - x
+    upper_bound_x = element_width - x
+
+    lower_bound_y = offset_y - y
+    upper_bound_y = element_height - y
+
+    move_x = random.randint(-x_range, x_range)
+    move_y = random.randint(-y_range, y_range)
+
+    move_x = clamp(move_x, lower_bound_x, upper_bound_x)
+    move_y = clamp(move_y, lower_bound_y, upper_bound_y)
+
+    return move_x, move_y
+
+
+def click_at(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
+    """
+    MOUSE_LEFTDOWN = 0x0002     # left button down
+    MOUSE_LEFTUP = 0x0004       # left button up
+    MOUSE_RIGHTDOWN = 0x0008    # right button down
+    MOUSE_RIGHTUP = 0x0010      # right button up
+    MOUSE_MIDDLEDOWN = 0x0020   # middle button down
+    MOUSE_MIDDLEUP = 0x0040     # middle button up
+    """
     # ctypes.windll.user32.SetCursorPos(int(offset_x), int(offset_y))
     # ctypes.windll.user32.SetCursorPos(int(frame_width), int(frame_height))
     # logger.info("clickAt {},{}".format(to_click_x, to_click_y))
@@ -71,20 +103,24 @@ def click_at(to_click_x, to_click_y):
         ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
         ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
         # need some time to move
-        time.sleep(0.1)
+        time.sleep(1)
+        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
 
-        direction = random.randint(1, 2)
-        if direction == 2:
-            direction = -1
-        move_x = random.randint(0, 20) * direction
-        move_y = random.randint(0, 20) * direction
+        logger.info("Move {},{}".format(to_move_x, to_move_y))
+        ctypes.windll.user32.mouse_event(1, to_move_x, to_move_y, 0, 0)
+        time.sleep(1)
 
-        logger.info("Move {},{}".format(move_x, move_y))
-        ctypes.windll.user32.mouse_event(1, move_x, move_y, 0, 0)
-        time.sleep(0.1)
-        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left up
+        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        # need some time to move
+        time.sleep(1)
+        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
     else:
         logger.warning("OS is " + os.name)
+
+
+def get_current_frame_number(web_driver):
+    cur_frame = web_driver.find_element_by_id('currentFrameNumber')
+    return int(cur_frame.get_attribute("value"))
 
 
 class XClickAtCommand(Command):
@@ -93,46 +129,47 @@ class XClickAtCommand(Command):
         to_click_x, to_click_y = 0, 0
         object_number = 0
 
-        cur_frame = self.web_driver.find_element_by_id('currentFrameNumber')
-        cur_frame = int(cur_frame.get_attribute("value"))
-
         logger.info("--->Before")
         visible_boxes = self.get_cur_boxes()
+        cur_frame = get_current_frame_number(self.web_driver)
+
+        (offset_x, offset_y), (width_el, height_el) = get_element_offsets_res(self.web_driver, self.target)
+        (offset_viewport_x, offset_viewport_y) = get_viewport_offsets(self.web_driver)
+
+        offset_x += offset_viewport_x
+        offset_y += offset_viewport_y
 
         if self.value and len(self.value) > 0 and self.value != RANDOM:
-
-            x, y = self.value.split(",")
-            to_click_x = int(x)
-            to_click_y = int(y)
+            to_click_x, to_click_y = self.value.split(",")
         else:
-            (offset_x, offset_y), (element_width, element_height) = get_element_offsets_res(self.web_driver,
-                                                                                            self.target)
-            (offset_viewport_x, offset_viewport_y) = get_viewport_offsets(self.web_driver)
+            is_click_box = False
+            if is_click_box:
+                id_to_click = random.randint(0, len(visible_boxes))
+                if safe_get_dict_item(self.test_data, "clicked"):
+                    if id_to_click in safe_get_dict_item(self.test_data, "clicked"):
+                        id_to_click += 1
 
-            offset_x += offset_viewport_x
-            offset_y += offset_viewport_y
+                for id, box in enumerate(visible_boxes):
+                    if id == id_to_click:
+                        logger.info(box)
+                        object_number, outside, occluded, points = box
+                        xtl, ytl, xbr, ybr = points
 
-            id_to_click = random.randint(0, len(visible_boxes))
-            if safe_get_dict_item(self.test_data, "clicked"):
-                if id_to_click in safe_get_dict_item(self.test_data, "clicked"):
-                    id_to_click += 1
+                        to_click_x, to_click_x = to_screen((xtl, ytl), (offset_x, offset_y),
+                                                           (width_el, height_el))
+                        # xbr_screen, ybr_screen = to_screen((xbr, ybr), (offset_x, offset_y),
+                        #                                    (width_el, height_el))
 
-            for id, box in enumerate(visible_boxes):
-                if id == id_to_click:
-                    logger.info(box)
-                    object_number, outside, occluded, points = box
-                    xtl, ytl, xbr, ybr = points
+                        break
+            else:
+                x = random.randint(0, int(width_el - offset_x))
+                y = random.randint(0, int(height_el - offset_y))
 
-                    xtl_screen, ytl_screen = to_screen((xtl, ytl), (offset_x, offset_y),
-                                                       (element_width, element_height))
-                    xbr_screen, ybr_screen = to_screen((xbr, ybr), (offset_x, offset_y),
-                                                       (element_width, element_height))
-                    to_click_x = int(xtl_screen) + 1
-                    to_click_y = int(xbr_screen) + 1
+                to_click_x, to_click_y = to_screen((x, y), (offset_x, offset_y),
+                                                   (width_el, height_el))
 
-                    break
-
-        click_at(to_click_x, to_click_y)
+        to_move_x, to_move_y = to_move(to_click_x, to_click_y, 50, 50, (offset_x, offset_y), (width_el, height_el))
+        click_at(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
         self.add_clicked(int(object_number))
         logger.info("### Click object_number={} at {},{} on frame={} ###".format(object_number,
                                                                                  to_click_x, to_click_y,

@@ -159,9 +159,9 @@ def wait_for_page_load(web_driver):
         """
         # 클릭시 javascript와 웹 대기는 두번씩 필요할 수 있기 때문에 두번 반복
         try:
-            wait(web_driver, 30)
+            wait(web_driver, 5)
             wait_for_javascript_load(web_driver)
-            wait(web_driver, 30)
+            wait(web_driver, 5)
             wait_for_javascript_load(web_driver)
         except Exception as ex:
             logger.warning("%s", ex)
