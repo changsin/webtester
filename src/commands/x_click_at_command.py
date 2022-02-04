@@ -3,14 +3,15 @@ Copyright (C) 2022 TestWorks Inc.
 2022-01-22: (changsin@) created.
 """
 
-import os
 import ctypes
+import os
 import random
 
 if os.name == "posix":
     import autopy
 import time
 
+from enum import Enum
 from src.util.selenium_util import get_element
 from src.util.logger import get_logger
 from src.util.util import safe_get_dict_item
@@ -25,6 +26,11 @@ HD_HEIGHT = 1080
 
 HD_RES = (HD_WIDTH, HD_HEIGHT)
 RANDOM = "{RANDOM}"
+
+class Action(Enum):
+    DRAW_BOX = "draw_box"
+    SELECT_BOX = "select_box"
+    RESIZE_BOX = "resize_box"
 
 
 def get_viewport_offsets(web_driver):
@@ -53,8 +59,8 @@ def to_screen(pt_image, offsets, element_res, image_res=HD_RES):
     element_width, element_height = element_res
     image_width, image_height = image_res
 
-    screen_x = (element_width * image_x) / image_width + offset_x
-    screen_y = (element_height * image_y) / image_height + offset_y
+    screen_x = ((element_width * image_x) / image_width) + offset_x
+    screen_y = ((element_height * image_y) / image_height) + offset_y
 
     return screen_x, screen_y
 
@@ -83,7 +89,7 @@ def to_move(x, y, x_range, y_range, offsets, element_res):
     return move_x, move_y
 
 
-def click_at(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
+def draw_box(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
     """
     MOUSE_LEFTDOWN = 0x0002     # left button down
     MOUSE_LEFTUP = 0x0004       # left button up
@@ -103,16 +109,52 @@ def click_at(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
         ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
         ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
         # need some time to move
-        time.sleep(1)
+        time.sleep(0.5)
         ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
 
         logger.info("Move {},{}".format(to_move_x, to_move_y))
         ctypes.windll.user32.mouse_event(1, to_move_x, to_move_y, 0, 0)
-        time.sleep(1)
+        time.sleep(0.5)
 
         ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
         # need some time to move
-        time.sleep(1)
+        time.sleep(0.5)
+        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
+    else:
+        logger.warning("OS is " + os.name)
+
+
+def select_box(to_click_x, to_click_y, to_move_x=10, to_move_y=10):
+    """
+    """
+    if os.name == "posix":
+        autopy.mouse.move(to_click_x, to_click_y)
+        autopy.mouse.click()
+    elif os.name == "nt":
+        ctypes.windll.user32.SetCursorPos(to_click_x + to_move_x, to_click_y + to_move_y)
+        time.sleep(0.5)
+        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
+    else:
+        logger.warning("OS is " + os.name)
+
+
+def resize_box(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
+    """
+    """
+    if os.name == "posix":
+        autopy.mouse.move(to_click_x, to_click_y)
+        autopy.mouse.click()
+    elif os.name == "nt":
+        ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
+        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        # need some time to move
+        time.sleep(0.5)
+
+        logger.info("Move {},{}".format(to_move_x, to_move_y))
+        ctypes.windll.user32.mouse_event(1, to_move_x, to_move_y, 0, 0)
+        time.sleep(0.5)
+
         ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
     else:
         logger.warning("OS is " + os.name)
@@ -142,25 +184,21 @@ class XClickAtCommand(Command):
         if self.value and len(self.value) > 0 and self.value != RANDOM:
             to_click_x, to_click_y = self.value.split(",")
         else:
-            is_click_box = False
-            if is_click_box:
-                id_to_click = random.randint(0, len(visible_boxes))
-                if safe_get_dict_item(self.test_data, "clicked"):
-                    if id_to_click in safe_get_dict_item(self.test_data, "clicked"):
-                        id_to_click += 1
+            if self.test_option and (self.test_option == Action.SELECT_BOX.value or self.test_option == Action.RESIZE_BOX.value):
+                id_to_click = random.randint(0, len(visible_boxes) - 1)
+                # if safe_get_dict_item(self.test_data, "clicked"):
+                #     if id_to_click in safe_get_dict_item(self.test_data, "clicked"):
+                #         id_to_click += 1
 
-                for id, box in enumerate(visible_boxes):
-                    if id == id_to_click:
-                        logger.info(box)
-                        object_number, outside, occluded, points = box
-                        xtl, ytl, xbr, ybr = points
+                box = visible_boxes[id_to_click]
+                logger.info(box)
+                object_number, outside, occluded, points = box
+                xtl, ytl, xbr, ybr = points
 
-                        to_click_x, to_click_x = to_screen((xtl, ytl), (offset_x, offset_y),
-                                                           (width_el, height_el))
-                        # xbr_screen, ybr_screen = to_screen((xbr, ybr), (offset_x, offset_y),
-                        #                                    (width_el, height_el))
-
-                        break
+                to_click_x, to_click_y = to_screen((xtl, ytl), (offset_x, offset_y),
+                                                   (width_el, height_el))
+                # xbr_screen, ybr_screen = to_screen((xbr, ybr), (offset_x, offset_y),
+                #                                    (width_el, height_el))
             else:
                 x = random.randint(0, int(width_el - offset_x))
                 y = random.randint(0, int(height_el - offset_y))
@@ -169,7 +207,15 @@ class XClickAtCommand(Command):
                                                    (width_el, height_el))
 
         to_move_x, to_move_y = to_move(to_click_x, to_click_y, 50, 50, (offset_x, offset_y), (width_el, height_el))
-        click_at(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
+
+        if self.test_option:
+            if self.test_option == Action.SELECT_BOX.value:
+                select_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
+            elif self.test_option == Action.RESIZE_BOX.value:
+                resize_box(int(to_click_x + 1), int(to_click_y + 1), int(to_move_x), int(to_move_y))
+        else:
+            draw_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
+
         self.add_clicked(int(object_number))
         logger.info("### Click object_number={} at {},{} on frame={} ###".format(object_number,
                                                                                  to_click_x, to_click_y,

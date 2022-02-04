@@ -154,25 +154,14 @@
     },
     {
       "Command": "click",
-      "Target": "id=createShapeButton",
+      "Target": "id=mergeTracksButton",
       "Value": "",
       "Targets": [
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "BeginLoop",
-      "Target": "",
-      "Value": "15",
-      "Targets": [
-      ],
-      "Description": ""
-    },
-    {
-      "Command": "x_clickAt",
-      "Target": "id=frameGrid",
-      "Value": "{RANDOM}",
-      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
       ],
       "Description": ""
     },
@@ -182,21 +171,41 @@
       "Value": "{RANDOM}",
       "Targets": [
       ],
-      "Description": ""
+      "Description": "",
+      "TestOption": "select_box"
     },
     {
-      "Command": "x_keybd",
-      "Target": "",
-      "Value": "0x48",
+      "Command": "click",
+      "Target": "id=nextButton",
+      "Value": "5",
       "Targets": [
+        "id=nextButton",
+        "xpath=//*[@id=\"nextButton\"]",
+        "xpath=//button[@id='nextButton']",
+        "xpath=//div[7]/button",
+        "css=#nextButton"
       ],
       "Description": ""
     },
     {
-      "Command": "EndLoop",
-      "Target": "",
-      "Value": "15",
+      "Command": "x_clickAt",
+      "Target": "id=frameGrid",
+      "Value": "{RANDOM}",
       "Targets": [
+      ],
+      "Description": "",
+      "TestOption": "select_box"
+    },
+    {
+      "Command": "click",
+      "Target": "id=mergeTracksButton",
+      "Value": "",
+      "Targets": [
+        "id=mergeTracksButton",
+        "xpath=//*[@id=\"mergeTracksButton\"]",
+        "xpath=//button[@id='mergeTracksButton']",
+        "xpath=//div[4]/div[5]/button",
+        "css=#mergeTracksButton"
       ],
       "Description": ""
     },
