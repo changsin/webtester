@@ -191,3 +191,9 @@ def get_viewport_height(web_driver):
             return False
 
         return viewport_height
+
+
+def get_current_frame_number(web_driver):
+    cur_frame = web_driver.find_element_by_id('currentFrameNumber')
+    return int(cur_frame.get_attribute("value"))
+

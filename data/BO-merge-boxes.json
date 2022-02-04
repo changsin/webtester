@@ -166,6 +166,14 @@
       "Description": ""
     },
     {
+      "Command": "BeginLoop",
+      "Target": "",
+      "Value": "5",
+      "Targets": [
+      ],
+      "Description": ""
+    },
+    {
       "Command": "x_clickAt",
       "Target": "id=frameGrid",
       "Value": "{RANDOM}",
@@ -206,6 +214,14 @@
         "xpath=//button[@id='mergeTracksButton']",
         "xpath=//div[4]/div[5]/button",
         "css=#mergeTracksButton"
+      ],
+      "Description": ""
+    },
+    {
+      "Command": "EndLoop",
+      "Target": "",
+      "Value": "15",
+      "Targets": [
       ],
       "Description": ""
     },

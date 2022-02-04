@@ -85,7 +85,7 @@
     },
     {
       "Command": "open",
-      "Target": "https://optool.aiworks.co.kr/?id=44750",
+      "Target": "https://optool.aiworks.co.kr/?id=74146",
       "Value": "",
       "Description": ""
     },
@@ -162,8 +162,8 @@
     },
     {
       "Command": "BeginLoop",
-      "Target": "",
-      "Value": "15",
+      "Target": "{RANDOM}",
+      "Value": "5",
       "Targets": [
       ],
       "Description": ""
@@ -186,8 +186,8 @@
     },
     {
       "Command": "EndLoop",
-      "Target": "",
-      "Value": "15",
+      "Target": "{RANDOM}",
+      "Value": "5",
       "Targets": [
       ],
       "Description": ""

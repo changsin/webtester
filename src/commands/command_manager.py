@@ -42,6 +42,7 @@ logger = get_logger(__name__)
 
 BEGIN_LOOP = "BeginLoop"
 END_LOOP = "EndLoop"
+RANDOM = "{RANDOM}"
 
 
 class CommandManager:
@@ -179,8 +180,9 @@ class CommandManager:
                     loop_began = False
                     times = int(current_value)
 
-                    for _ in range(times):
-                        id = random.randint(0, len(loop_queue) - 1)
+                    for id in range(times):
+                        if current_target == RANDOM:
+                            id = random.randint(0, len(loop_queue) - 1)
                         self.commands_queue.append(loop_queue[id])
                 continue
 

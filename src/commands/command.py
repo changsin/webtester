@@ -2,6 +2,7 @@
 Copyright (C) 2020 TestWorks Inc.
 """
 from abc import ABC, abstractmethod
+from src.util.selenium_util import get_current_frame_number
 from src.util.logger import get_logger
 from src.util.util import safe_get_dict_item
 
@@ -33,6 +34,18 @@ class Command(ABC):
     def get_cur_boxes(self):
         """
         :return: bounding boxes of the current frame
+
+        window.cvat.data consists of two entries: shapes (annotation-mode) & tracks (interpolation-mode)
+
+        tracks:
+            - frame: start frame
+            - object_number: display id
+            - shapes:
+                - occluded: true
+                - outside: true - hidden
+                - frame: the frame number that has changes
+                - points: []
+                - z_order:
         """
         script = """
             function getCVATDataSafe(defaultVal) {
@@ -50,8 +63,7 @@ class Command(ABC):
         if "undefined" == collected:
             return None
 
-        cur_frame = self.web_driver.find_element_by_id('currentFrameNumber')
-        cur_frame = int(cur_frame.get_attribute("value"))
+        cur_frame = get_current_frame_number(self.web_driver)
 
         tracks = collected['tracks']
 
@@ -65,19 +77,18 @@ class Command(ABC):
             shapes = track['shapes']
             shape_last = None
             for shape in shapes:
-                # only consider if the started frame is before the currrent frame
-                if shape['frame'] <= cur_frame:
+                # only consider if the started frame is before the current frame
+                if cur_frame >= shape['frame']:
                     shape_last = shape
                     continue
 
-                if not shape_last['outside']:
-                    object_number = track['object_number']
-                    points = shape_last['points']
-                    visible_boxes.append((object_number,
-                                          shape_last['outside'],
-                                          shape_last['occluded'],
-                                          points))
-                    break
+            if not shape_last['outside']:
+                object_number = track['object_number']
+                points = shape_last['points']
+                visible_boxes.append((object_number,
+                                      shape_last['outside'],
+                                      shape_last['occluded'],
+                                      points))
 
         idx_visible = []
         for id, outside, occluded, points in visible_boxes:

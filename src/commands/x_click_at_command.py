@@ -12,9 +12,8 @@ if os.name == "posix":
 import time
 
 from enum import Enum
-from src.util.selenium_util import get_element
+from src.util.selenium_util import get_element, get_current_frame_number
 from src.util.logger import get_logger
-from src.util.util import safe_get_dict_item
 
 from .command import Command
 
@@ -26,6 +25,7 @@ HD_HEIGHT = 1080
 
 HD_RES = (HD_WIDTH, HD_HEIGHT)
 RANDOM = "{RANDOM}"
+
 
 class Action(Enum):
     DRAW_BOX = "draw_box"
@@ -160,11 +160,6 @@ def resize_box(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
         logger.warning("OS is " + os.name)
 
 
-def get_current_frame_number(web_driver):
-    cur_frame = web_driver.find_element_by_id('currentFrameNumber')
-    return int(cur_frame.get_attribute("value"))
-
-
 class XClickAtCommand(Command):
     def execute(self):
 
@@ -212,7 +207,7 @@ class XClickAtCommand(Command):
             if self.test_option == Action.SELECT_BOX.value:
                 select_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
             elif self.test_option == Action.RESIZE_BOX.value:
-                resize_box(int(to_click_x + 1), int(to_click_y + 1), int(to_move_x), int(to_move_y))
+                resize_box(int(to_click_x + 2), int(to_click_y + 2), int(to_move_x), int(to_move_y))
         else:
             draw_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
 
@@ -220,7 +215,6 @@ class XClickAtCommand(Command):
         logger.info("### Click object_number={} at {},{} on frame={} ###".format(object_number,
                                                                                  to_click_x, to_click_y,
                                                                                  cur_frame))
-
         time.sleep(0.1)
 
         self.test_data["boxes"] = self.get_cur_boxes()
