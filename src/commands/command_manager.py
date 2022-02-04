@@ -113,23 +113,23 @@ class CommandManager:
         for index in range(len(self.commands_queue)):
             command = self.commands_queue[index]
 
-            # if type(command).__name__ != "AssertAlertCommand":
-            #     try:
-            #         self.web_driver.switch_to.alert.accept()
-            #     except:
-            #         pass
+            if type(command).__name__ != "AssertAlertCommand":
+                try:
+                    self.web_driver.switch_to.alert.accept()
+                except:
+                    pass
 
             result = command.execute()
             
-            # if True != error_handling(result):
-            #     return index+1
-            #
-            # try:
-            #     alert = self.web_driver.switch_to.alert
-            #     if alert != None:
-            #         continue
-            # except:
-            #     pass
+            if True != error_handling(result):
+                return index+1
+
+            try:
+                alert = self.web_driver.switch_to.alert
+                if alert != None:
+                    continue
+            except:
+                pass
             if not type(command).__name__.startswith("X"):
                 try:
                     wait_for_page_load(self.web_driver)
@@ -143,6 +143,7 @@ class CommandManager:
             if not result:
                 return index+1
 
+        time.sleep(1)
         logger.info('Command finish')
         return 0
 

@@ -1,5 +1,5 @@
 """
-Copyright (C) 2022 TestWorks Inc.
+Copyright (C) 2022 Testworks Inc.
 2022-01-22: (changsin@) created.
 """
 
