@@ -22,6 +22,16 @@ logger = get_logger(__name__)
 # TODO: get the original image resolutions dynamically from the proper source
 HD_WIDTH = 1920
 HD_HEIGHT = 1080
+SLEEP_DEFAULT = 0.5 # default sleep time between actions
+
+
+MOUSE_MOVE = 0x0001  # left button down
+MOUSE_LEFTDOWN = 0x0002  # left button down
+MOUSE_LEFTUP = 0x0004  # left button up
+MOUSE_RIGHTDOWN = 0x0008  # right button down
+MOUSE_RIGHTUP = 0x0010  # right button up
+MOUSE_MIDDLEDOWN = 0x0020  # middle button down
+MOUSE_MIDDLEUP = 0x0040  # middle button up
 
 HD_RES = (HD_WIDTH, HD_HEIGHT)
 RANDOM = "{RANDOM}"
@@ -107,19 +117,19 @@ def draw_box(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
         autopy.mouse.click()
     elif os.name == "nt":
         ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
-        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTDOWN, 0, 0, 0, 0)  # left down
         # need some time to move
-        time.sleep(0.5)
-        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
+        time.sleep(SLEEP_DEFAULT)
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTUP, 0, 0, 0, 0)  # left down
 
         logger.info("Move {},{}".format(to_move_x, to_move_y))
-        ctypes.windll.user32.mouse_event(1, to_move_x, to_move_y, 0, 0)
-        time.sleep(0.5)
+        ctypes.windll.user32.mouse_event(MOUSE_MOVE, to_move_x, to_move_y, 0, 0)
+        time.sleep(SLEEP_DEFAULT)
 
-        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTDOWN, 0, 0, 0, 0)  # left down
         # need some time to move
-        time.sleep(0.5)
-        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
+        time.sleep(SLEEP_DEFAULT)
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTUP, 0, 0, 0, 0)  # left down
     else:
         logger.warning("OS is " + os.name)
 
@@ -132,9 +142,9 @@ def select_box(to_click_x, to_click_y, to_move_x=10, to_move_y=10):
         autopy.mouse.click()
     elif os.name == "nt":
         ctypes.windll.user32.SetCursorPos(to_click_x + to_move_x, to_click_y + to_move_y)
-        time.sleep(0.5)
-        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
-        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
+        time.sleep(SLEEP_DEFAULT)
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTDOWN, 0, 0, 0, 0)  # left down
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTUP, 0, 0, 0, 0)  # left down
     else:
         logger.warning("OS is " + os.name)
 
@@ -147,15 +157,15 @@ def resize_box(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
         autopy.mouse.click()
     elif os.name == "nt":
         ctypes.windll.user32.SetCursorPos(to_click_x, to_click_y)
-        ctypes.windll.user32.mouse_event(2, 0, 0, 0, 0)  # left down
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTDOWN, 0, 0, 0, 0)  # left down
         # need some time to move
-        time.sleep(0.5)
+        time.sleep(SLEEP_DEFAULT)
 
         logger.info("Move {},{}".format(to_move_x, to_move_y))
-        ctypes.windll.user32.mouse_event(1, to_move_x, to_move_y, 0, 0)
-        time.sleep(0.5)
+        ctypes.windll.user32.mouse_event(MOUSE_MOVE, to_move_x, to_move_y, 0, 0)
+        time.sleep(SLEEP_DEFAULT)
 
-        ctypes.windll.user32.mouse_event(4, 0, 0, 0, 0)  # left down
+        ctypes.windll.user32.mouse_event(MOUSE_LEFTUP, 0, 0, 0, 0)  # left up
     else:
         logger.warning("OS is " + os.name)
 
@@ -170,8 +180,8 @@ class XClickAtCommand(Command):
         visible_boxes = self.get_cur_boxes()
         cur_frame = get_current_frame_number(self.web_driver)
 
-        (offset_x, offset_y), (width_el, height_el) = get_element_offsets_res(self.web_driver, self.target)
         (offset_viewport_x, offset_viewport_y) = get_viewport_offsets(self.web_driver)
+        (offset_x, offset_y), (width_el, height_el) = get_element_offsets_res(self.web_driver, self.target)
 
         offset_x += offset_viewport_x
         offset_y += offset_viewport_y
@@ -181,9 +191,6 @@ class XClickAtCommand(Command):
         else:
             if self.test_option and (self.test_option == Action.SELECT_BOX.value or self.test_option == Action.RESIZE_BOX.value):
                 id_to_click = random.randint(0, len(visible_boxes) - 1)
-                # if safe_get_dict_item(self.test_data, "clicked"):
-                #     if id_to_click in safe_get_dict_item(self.test_data, "clicked"):
-                #         id_to_click += 1
 
                 box = visible_boxes[id_to_click]
                 logger.info(box)
@@ -204,10 +211,16 @@ class XClickAtCommand(Command):
         to_move_x, to_move_y = to_move(to_click_x, to_click_y, 50, 50, (offset_x, offset_y), (width_el, height_el))
 
         if self.test_option:
+            (offset_x, offset_y), _ = get_element_offsets_res(self.web_driver, self.target)
+            logger.info("===Before: frameGrid offset {},{}".format(offset_x, offset_y))
             if self.test_option == Action.SELECT_BOX.value:
                 select_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
             elif self.test_option == Action.RESIZE_BOX.value:
-                resize_box(int(to_click_x + 2), int(to_click_y + 2), int(to_move_x), int(to_move_y))
+                resize_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
+
+            (offset_x_1, offset_y_1), _ = get_element_offsets_res(self.web_driver, self.target)
+            logger.info("===After: frameGrid offset {},{}".format(offset_x - offset_x_1, offset_y - offset_y_1))
+
         else:
             draw_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
 

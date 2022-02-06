@@ -154,8 +154,8 @@
     },
     {
       "Command": "BeginLoop",
-      "Target": "",
-      "Value": "15",
+      "Target": "{RANDOM}",
+      "Value": "50",
       "Targets": [
       ],
       "Description": ""
@@ -212,8 +212,8 @@
     },
     {
       "Command": "EndLoop",
-      "Target": "",
-      "Value": "15",
+      "Target": "{RANDOM}",
+      "Value": "50",
       "Targets": [
       ],
       "Description": ""

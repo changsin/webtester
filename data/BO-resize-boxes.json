@@ -155,7 +155,7 @@
     {
       "Command": "BeginLoop",
       "Target": "",
-      "Value": "15",
+      "Value": "10",
       "Targets": [
       ],
       "Description": ""
@@ -181,7 +181,7 @@
     {
       "Command": "EndLoop",
       "Target": "",
-      "Value": "15",
+      "Value": "10",
       "Targets": [
       ],
       "Description": ""

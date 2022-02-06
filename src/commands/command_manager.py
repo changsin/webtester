@@ -184,6 +184,7 @@ class CommandManager:
                     for id in range(times):
                         if current_target == RANDOM:
                             id = random.randint(0, len(loop_queue) - 1)
+                        id = id % len(loop_queue)
                         self.commands_queue.append(loop_queue[id])
                 continue
 
