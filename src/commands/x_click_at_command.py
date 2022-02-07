@@ -13,6 +13,7 @@ import time
 
 from enum import Enum
 from src.util.selenium_util import get_element, get_current_frame_number
+from src.util.util import safe_get_dict_item
 from src.util.logger import get_logger
 
 from .command import Command
@@ -171,13 +172,35 @@ def resize_box(to_click_x, to_click_y, to_move_x=0, to_move_y=0):
 
 
 class XClickAtCommand(Command):
+    def pick_box_id(self, boxes):
+        """
+        : return: pick a different random id from boxes
+
+        boxes: visible boxes
+        picked_idx: ids already picked
+        """
+        picked_idx = safe_get_dict_item(self.test_data, "picked_idx")
+        id = random.randint(0, len(boxes) - 1)
+        object_number, _, _, _ = boxes[id]
+        if picked_idx:
+            while object_number in picked_idx:
+                id = random.randint(0, len(boxes) - 1)
+                object_number, _, _, _ = boxes[id]
+        else:
+            picked_idx = []
+
+        picked_idx.append(object_number)
+        self.test_data["picked_idx"] = picked_idx
+
+        return id
+
     def execute(self):
 
         to_click_x, to_click_y = 0, 0
         object_number = 0
 
         logger.info("--->Before")
-        visible_boxes = self.get_cur_boxes()
+        visible_boxes = self.get_visible_boxes()
         cur_frame = get_current_frame_number(self.web_driver)
 
         (offset_viewport_x, offset_viewport_y) = get_viewport_offsets(self.web_driver)
@@ -190,7 +213,7 @@ class XClickAtCommand(Command):
             to_click_x, to_click_y = self.value.split(",")
         else:
             if self.test_option and (self.test_option == Action.SELECT_BOX.value or self.test_option == Action.RESIZE_BOX.value):
-                id_to_click = random.randint(0, len(visible_boxes) - 1)
+                id_to_click = self.pick_box_id(visible_boxes)
 
                 box = visible_boxes[id_to_click]
                 logger.info(box)
@@ -225,13 +248,12 @@ class XClickAtCommand(Command):
         else:
             draw_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
 
-        self.add_clicked(int(object_number))
         logger.info("### Click object_number={} at {},{} on frame={} ###".format(object_number,
                                                                                  to_click_x, to_click_y,
                                                                                  cur_frame))
         time.sleep(0.1)
 
-        self.test_data["boxes"] = self.get_cur_boxes()
+        self.test_data["boxes"] = self.get_visible_boxes()
         logger.info("<---After")
 
         return True

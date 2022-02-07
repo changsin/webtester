@@ -130,6 +130,8 @@ class CommandManager:
                     continue
             except:
                 pass
+
+            # for extended commands, don't wait to load to save some time
             if not type(command).__name__.startswith("X"):
                 try:
                     wait_for_page_load(self.web_driver)
@@ -137,8 +139,6 @@ class CommandManager:
                 except Exception as ex:
                     logger.error("%s", ex)
                     return index+1
-            else:
-                logger.info("=== not waiting {}".format(type(command).__name__))
 
             if not result:
                 return index+1
@@ -181,7 +181,7 @@ class CommandManager:
                     loop_began = False
                     times = int(current_value)
 
-                    for id in range(times):
+                    for id in range(times * len(loop_queue)):
                         if current_target == RANDOM:
                             id = random.randint(0, len(loop_queue) - 1)
                         id = id % len(loop_queue)

@@ -21,19 +21,13 @@ class Command(ABC):
         self.test_option = test_option
         self.test_data = {}
 
-    def add_clicked(self, id):
-        if safe_get_dict_item(self.test_data, "clicked"):
-            self.test_data["clicked"].append(id)
-        else:
-            self.test_data["clicked"] = [id]
-
     @abstractmethod
     def execute(self):
         raise NotImplementedError
 
-    def get_cur_boxes(self):
+    def get_visible_boxes(self):
         """
-        :return: bounding boxes of the current frame
+        :return: visible boxes of the current frame
 
         window.cvat.data consists of two entries: shapes (annotation-mode) & tracks (interpolation-mode)
 

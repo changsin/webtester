@@ -33,6 +33,7 @@ class XKeybdCommand(Command):
         else:
             logger.warning("OS is " + os.name)
 
-        time.sleep(0.1)
+        # TODO: get it from TestOption
+        time.sleep(1)
 
         return True

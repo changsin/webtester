@@ -13,7 +13,6 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
 from src.util import util
-from src.util.decorators import log_function_call
 from src.util.logger import get_logger
 from src.util.selenium_util import handle_alert
 
@@ -86,38 +85,6 @@ class SeleniumExecutor:
             handle_alert(self.driver)
             self.driver.get(url)
         time.sleep(0.5)
-
-    def run_constraints(self, graph, source_node, target_node, constraints):
-        """
-        simply runs constraints if there are any
-        There can be two types of constraints:
-            1. against the web page (url)
-            2. against a specific element
-
-        It runs the constraints for #1 first, then #2 second
-        """
-        cur_node = source_node
-
-        if source_node:
-            # run page-wide constraints first
-            node_constraints = util.safe_get_dict_item(constraints, source_node.url)
-            if node_constraints:
-                graph, cur_node = self.run_node_series(graph, cur_node, node_constraints)
-
-            # run per element constraints next
-            if source_node.get_key() != source_node.url:
-                node_constraints = util.safe_get_dict_item(constraints, source_node.get_key())
-                if node_constraints:
-                    graph, cur_node = self.run_node_series(graph, cur_node, node_constraints)
-
-        # check if there are any element-wise constraints
-        if target_node:
-            node_constraints = util.safe_get_dict_item(constraints, target_node.get_key())
-            if node_constraints:
-                graph, cur_node = self.run_node_series(graph, cur_node, node_constraints)
-
-        return graph, cur_node
-
 
     def wait_for_page_load(self, old_page, timeout=3):
         try:

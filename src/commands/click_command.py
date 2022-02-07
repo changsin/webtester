@@ -36,7 +36,7 @@ class ClickCommand(Command):
         단, PC 버전에서 문제가 있기 때문에 따로 분리해서 작성함
         """
         logger.info("--->Before")
-        self.get_cur_boxes()
+        self.get_visible_boxes()
 
         if self.test_option == "PC":
             for i in range(count):
@@ -67,6 +67,6 @@ class ClickCommand(Command):
                 return False
 
         logger.info("<---After")
-        self.test_data = self.get_cur_boxes()
+        self.test_data = self.get_visible_boxes()
 
         return True
