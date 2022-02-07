@@ -1,37 +1,5 @@
 {
   "browser_options": {
     "headless": "False"
-  },
-  "blacklist_targets": [
-  ],
-  "blacklist_labels": [
-    "logoutBtn",
-    "로그아웃"
-  ],
-  "post_constraints": {
-    "http://aiworks.co.kr/page/login": [
-      {
-        "url": "http://aiworks.co.kr/page/login",
-        "action": "type",
-        "label": "username",
-        "value": "changsin",
-        "xpath": "/html/body/div/div/div[2]/div/div/div[4]/div/div/div/div/div[2]/form[1]/div[2]/div[1]/div[1]/div[2]/div[1]/input"
-      },
-      {
-        "url": "http://aiworks.co.kr/page/login",
-        "action": "type",
-        "label": "password",
-        "value": "aiworks1!",
-        "xpath": "/html/body/div/div/div[2]/div/div/div[4]/div/div/div/div/div[2]/form[1]/div[2]/div[1]/div[2]/div[2]/div/input"
-      },
-      {
-        "url": "http://aiworks.co.kr/page/login",
-        "action": "click",
-        "target": "javascript:void('0')",
-        "label": "login",
-        "value": "로그인",
-        "xpath": "/html/body/div/div/div[2]/div/div/div[4]/div/div/div/div/div[2]/form[1]/div[2]/div[2]/div[2]/div/a"
-      }
-    ]
   }
 }

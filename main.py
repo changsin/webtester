@@ -4,7 +4,7 @@ import os
 
 import settings
 from src.executor.selenium_executor import SeleniumExecutor
-from src.model.options import Options
+from options import Options
 from src.util import util
 from src.util.logger import get_logger
 from src.commands.command_manager import CommandManager
