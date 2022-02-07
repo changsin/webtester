@@ -30,20 +30,11 @@ def crawl(start_url, options_file_path):
 
     selenium_executor = SeleniumExecutor.create(settings.CHROME_DRIVER_PATH, options)
 
-    script_file_path = "data/BO-resize-boxes.json"
+    script_file_path = "data/BO-resize-hide-boxes.json"
     exec_result = run_script(selenium_executor.driver, script_file_path)
-
-    # crawler = Crawler(selenium_executor.driver, options, path)
-    #
-    # source_node = crawler.crawl(start_url, depth)
-    # logger.info("source_node is %s", source_node)
-
-    # selenium_executor.driver.get("https://aiworks.co.kr")
-
     selenium_executor.close()
 
     return exec_result
-    # return graph_file_path
 
 
 if __name__ == '__main__':

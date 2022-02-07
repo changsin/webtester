@@ -181,10 +181,10 @@ class XClickAtCommand(Command):
         cur_frame = get_current_frame_number(self.web_driver)
 
         (offset_viewport_x, offset_viewport_y) = get_viewport_offsets(self.web_driver)
-        (offset_x, offset_y), (width_el, height_el) = get_element_offsets_res(self.web_driver, self.target)
+        (offset_el_x, offset_el_y), (width_el, height_el) = get_element_offsets_res(self.web_driver, self.target)
 
-        offset_x += offset_viewport_x
-        offset_y += offset_viewport_y
+        offset_x = offset_viewport_x + offset_el_x
+        offset_y = offset_viewport_y + offset_el_y
 
         if self.value and len(self.value) > 0 and self.value != RANDOM:
             to_click_x, to_click_y = self.value.split(",")
@@ -219,7 +219,8 @@ class XClickAtCommand(Command):
                 resize_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))
 
             (offset_x_1, offset_y_1), _ = get_element_offsets_res(self.web_driver, self.target)
-            logger.info("===After: frameGrid offset {},{}".format(offset_x - offset_x_1, offset_y - offset_y_1))
+            offset_dx, offset_dy = offset_x - offset_x_1, offset_y - offset_y_1
+            logger.info("===After: frameGrid offset {},{}".format(offset_dx, offset_dy))
 
         else:
             draw_box(int(to_click_x), int(to_click_y), int(to_move_x), int(to_move_y))

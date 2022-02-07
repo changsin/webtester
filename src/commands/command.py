@@ -39,7 +39,11 @@ class Command(ABC):
 
         tracks:
             - frame: start frame
+            - group: part of a group?
+            - id: unique id
+            - label_id: class id
             - object_number: display id
+            - select:
             - shapes:
                 - occluded: true
                 - outside: true - hidden
@@ -107,13 +111,8 @@ class Command(ABC):
                                "occluded": shape['occluded'],
                                "z_order": shape['z_order']})
 
-            # idx_all.append({"object_number": track['object_number'],
-            #                 "id": track['id'],
-            #                 "select": track['select'],
-            #                 "shapes": shapes})
             idx_all.append({"object_number": track['object_number']})
 
         logger.info("all idx: {} {}".format(len(idx_all), idx_all))
 
         return visible_boxes
-
